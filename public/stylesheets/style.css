@@ -79,3 +79,105 @@ body {
   font-size: xx-small;
   color: #86868B;
 }
+
+/* login page */
+.login-input-group {
+  margin: 3rem 0;
+  padding: 0 1rem;
+}
+
+.login-input-group input {
+  text-align: center;
+  border: none;
+  border-bottom: 1px solid #ccc;
+  outline: none;
+  background: transparent;
+  border-radius: 0;
+  letter-spacing: 0.5px;
+  font-size: 0.9rem;
+}
+
+.login-input-group input:focus {
+  box-shadow: none;
+  border-bottom: 2px solid #ff626f;
+}
+
+input::placeholder {
+  font-size: 0.5rem;
+}
+
+input:focus + .label {
+  color: #ff626f;
+  font-size: x-small;
+  font-weight: bolder;
+  transition-duration: 0.3s;
+}
+
+input + .label {
+  transition-duration: 0.3s;
+}
+
+#login-card {
+  position: relative;
+}
+
+#label-login-email {
+  position: absolute;
+  top: 28%;
+  left: 10%;
+}
+
+#label-login-pd {
+  position: absolute;
+  top: 45%;
+  left: 10%;
+}
+
+#login-card {
+  position: relative;
+}
+
+#label-reg-name {
+  position: absolute;
+  top: 21%;
+  left: 10%;
+}
+
+#label-reg-email {
+  position: absolute;
+  top: 33.5%;
+  left: 10%;
+}
+
+#label-reg-pd {
+  position: absolute;
+  top: 46%;
+  left: 10%;
+}
+
+#label-reg-cpd {
+  position: absolute;
+  top: 58.5%;
+  left: 10%;
+}
+
+.login-btn {
+  background: #dc3543;
+  color: #ffffff;
+}
+
+.login-btn:hover {
+  background: #ff626f;
+  color: #ffffff;
+}
+
+.fb-login-btn {
+  background: #1877f2;
+  color: #ffffff;
+}
+
+.fb-login-btn:hover {
+  background: #4f8ee0;
+  color: #ffffff;
+}
+/* login page */
