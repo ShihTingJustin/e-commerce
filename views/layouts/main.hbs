@@ -5,118 +5,198 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Feed Your Soul: Everything tasty here!</title>
-  <!-- font-awesome -->
-  <script src="https://kit.fontawesome.com/a470dfdd95.js" crossorigin="anonymous"></script>
-  <!--- include css file here --->
+  <title>Apple (simulate)</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
     integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-  {{!-- <link rel="stylesheet" href="/stylesheets/bootstrap.css"> --}}
+  <script src="https://kit.fontawesome.com/a470dfdd95.js" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="/stylesheets/style.css">
-  <link rel="stylesheet" href="/stylesheets/login.css">
 </head>
 
 <body>
-  <div id="blur"></div>
-  <!-- navigation -->
-  <header>
-    <nav class="navbar navbar-light bg-light">
-      <div class="header-left">
-        <a class="navbar-brand ml-5" href="/" style='font-size:30px;'>Feed Your Soul</a>
-      </div>
-      <div class="header-right font-weight-bold d-flex">
-        {{#if isAuthenticated}}
-        <a class="nav-btn" href="/restaurants/new"><i class="fas fa-plus-circle"></i></a>
-        <a class="nav-btn" href="/"><i class="fas fa-heart"></i></a>
-        <a class="nav-btn mr" href="/"><i class="fas fa-bell"></i></a>
-
-        <div class="dropdown show nav-dropdown ml-3 my-1">
-          <button class="btn btn-outline-danger dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <i class="fas fa-user-circle mr-2"></i>
-            {{#if user.name }}{{ user.name }}{{else}}{{ user.email }}{{/if}}
-          </button>
-          <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-            <a class="dropdown-item" href="#">Personal</a>
-            <a class="dropdown-item" href="#">Settings</a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="/users/logout">Logout</a>
-          </div>
-        </div>
-
-        {{else}}
-        <a href="/users/login" class="btn nav-login-btn ml-4 px-3">Login</a>
-        {{/if}}
-      </div>
-    </nav>
-    <!-- <div class="banner"></div> -->
-    {{!-- <!-- bootstrap carousel -->
-    <div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
-      <ol class="carousel-indicators">
-        <li data-target="#carouselExampleCaptions" data-slide-to="0" class="active"></li>
-        <li data-target="#carouselExampleCaptions" data-slide-to="1"></li>
-        <li data-target="#carouselExampleCaptions" data-slide-to="2"></li>
-      </ol>
-      <div class="carousel-inner">
-        <div class="carousel-item active">
-          <img src="https://nipananlifestyle.com/wp-content/uploads/2018/09/friends-toasting-wine-at-a-restaurant.jpeg"
-            class="d-block w-100" style='object-fit: cover; filter: brightness(90%); height: 550px;' alt="...">
-          <div class="carousel-caption d-none d-md-block">
-            <h2>RESTAURANT</h2>
-            <P>LET LIFE BE BEAUTIFUL LIKE SUMMER FLOWERS.</P>
-          </div>
-        </div>
-        <div class="carousel-item">
-          <img src="http://magdaminguet.cat/wp-content/uploads/2019/07/amiguesMares.jpg" class="d-block w-100"
-            style='object-fit: cover; filter: brightness(90%); height: 550px;' alt="...">
-          <div class="carousel-caption d-none d-md-block">
-            <h2>CAFE</h2>
-            <p>ENJOY CUP OF COFFEE WITH FRIENDS.</p>
-          </div>
-        </div>
-        <div class="carousel-item">
-          <img
-            src="https://aaptiv.com/magazine/wp-content/uploads/2018/10/Here’s-What-Actually-Happens-When-You-Drink-Too-Much.jpg"
-            class="d-block w-100" style='object-fit: cover; filter: brightness(90%); height: 550px;' alt="...">
-          <div class="carousel-caption d-none d-md-block">
-            <h2>LOUNGE</h2>
-            <p>EAT WELL. DRINK WELL. HAVE FUN.</p>
-          </div>
-        </div>
-      </div>
-      <a class="carousel-control-prev" href="#carouselExampleCaptions" role="button" data-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="sr-only">Previous</span>
-      </a>
-      <a class="carousel-control-next" href="#carouselExampleCaptions" role="button" data-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="sr-only">Next</span>
-      </a>
+  <nav class="navbar d-flex justify-content-around">
+    <div class="nav-icon nav-apple-logo">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="44" viewBox="0 0 16 44">
+        <path
+          d="M8.02 16.23c-.73 0-1.86-.83-3.05-.8-1.57.02-3.01.91-3.82 2.32-1.63 2.83-.42 7.01 1.17 9.31.78 1.12 1.7 2.38 2.92 2.34 1.17-.05 1.61-.76 3.03-.76 1.41 0 1.81.76 3.05.73 1.26-.02 2.06-1.14 2.83-2.27.89-1.3 1.26-2.56 1.28-2.63-.03-.01-2.45-.94-2.48-3.74-.02-2.34 1.91-3.46 2-3.51-1.1-1.61-2.79-1.79-3.38-1.83-1.54-.12-2.83.84-3.55.84zm2.6-2.36c.65-.78 1.08-1.87.96-2.95-.93.04-2.05.62-2.72 1.4-.6.69-1.12 1.8-.98 2.86 1.03.08 2.09-.53 2.74-1.31"
+          fill="#fff" /></svg>
     </div>
-    <!-- bootstrap carousel --> --}}
-  </header>
-  <!-- partial templates will replace the part of "body" here -->
+    <div class="nav-icon nav-mac">
+      <svg xmlns="http://www.w3.org/2000/svg" width="26" height="44" viewBox="0 0 26 44">
+        <path
+          d="M8.7 27v-7.53h-.08L5.5 26.93H4.47l-3.11-7.46h-.09V27H.12v-9.86h1.43l3.38 8.16h.11l3.38-8.16h1.43V27H8.7zm6.12-7.49c-1.57 0-2.73.78-2.89 1.96h1.19c.16-.58.78-.92 1.66-.92 1.1 0 1.67.5 1.67 1.41v.67l-2.13.13c-1.72.1-2.69.86-2.69 2.18 0 1.35 1.06 2.19 2.49 2.19.98 0 1.79-.43 2.27-1.22h.11V27h1.12v-5.04c0-1.53-1-2.45-2.8-2.45zm1.63 4.75c0 1.05-.9 1.85-2.11 1.85-.85 0-1.49-.44-1.49-1.19 0-.74.49-1.13 1.61-1.2l1.98-.13v.67zm8.11-2.37c-.19-.73-.84-1.33-1.9-1.33-1.33 0-2.16 1.06-2.16 2.73 0 1.7.85 2.78 2.16 2.78.99 0 1.68-.46 1.9-1.29h1.19c-.21 1.35-1.31 2.35-3.08 2.35-2.06 0-3.38-1.5-3.38-3.84 0-2.3 1.31-3.79 3.38-3.79 1.79 0 2.88 1.07 3.09 2.39h-1.2z"
+          fill="#fff" />
+        <path fill="none" d="M0 0h26v44H0z" /></svg>
+    </div>
+    <div class="nav-icon nav-ipad">
+      <svg xmlns="http://www.w3.org/2000/svg" width="27" height="44" viewBox="0 0 27 44">
+        <path
+          d="M.5 17.31c0-.45.37-.82.82-.82s.82.37.82.82-.37.82-.82.82-.82-.37-.82-.82zm.23 2.32h1.18V27H.73v-7.37zm7.16-2.49c1.87 0 3.16 1.31 3.16 3.19 0 1.85-1.32 3.15-3.17 3.15H5.39V27H4.16v-9.86h3.73zm-2.5 5.25h2.17c1.4 0 2.21-.75 2.21-2.06 0-1.35-.79-2.1-2.21-2.1H5.39v4.16zm6.66 2.55c0-1.32.97-2.08 2.69-2.18l2.13-.13v-.67c0-.91-.57-1.41-1.67-1.41-.88 0-1.5.33-1.66.92h-1.19c.16-1.18 1.32-1.96 2.89-1.96 1.8 0 2.8.92 2.8 2.45V27h-1.12v-1.09h-.11c-.48.79-1.29 1.22-2.27 1.22-1.43 0-2.49-.85-2.49-2.19zm4.82-.69v-.68l-1.98.13c-1.12.08-1.61.46-1.61 1.2 0 .75.64 1.19 1.49 1.19 1.2.01 2.1-.79 2.1-1.84zm2.84-.93c0-2.31 1.22-3.81 3.1-3.81 1.03 0 1.89.49 2.31 1.29h.1v-4.09h1.18V27h-1.12v-1.18h-.11c-.46.82-1.34 1.31-2.36 1.31-1.89 0-3.1-1.5-3.1-3.81zm1.21 0c0 1.72.81 2.75 2.15 2.75 1.34 0 2.17-1.05 2.17-2.75 0-1.69-.83-2.75-2.17-2.75-1.33-.01-2.15 1.03-2.15 2.75z"
+          fill="#fff" />
+        <path fill="none" d="M0 0h27v44H0z" /></svg>
+    </div>
+    <div class="nav-icon nav-iphone">
+      <svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 44 44">
+        <path
+          d="M.5 17.31c0-.45.37-.82.82-.82s.82.37.82.82-.37.82-.82.82-.82-.36-.82-.82zm.23 2.32h1.18V27H.73v-7.37zm7.16-2.49c1.87 0 3.16 1.31 3.16 3.19 0 1.85-1.32 3.15-3.17 3.15H5.39V27H4.16v-9.86h3.73zm-2.5 5.25h2.17c1.4 0 2.21-.75 2.21-2.06 0-1.35-.79-2.1-2.21-2.1H5.39v4.16zm7.44-5.68h1.18v4.09h.11c.37-.81 1.14-1.29 2.27-1.29 1.56 0 2.54 1 2.54 2.73V27h-1.18v-4.48c0-1.31-.59-1.96-1.7-1.96-1.32 0-2.04.83-2.04 2.08V27h-1.18V16.71zm7.74 6.61c0-2.37 1.3-3.81 3.4-3.81s3.4 1.44 3.4 3.81-1.3 3.81-3.4 3.81-3.4-1.45-3.4-3.81zm5.58 0c0-1.75-.79-2.75-2.18-2.75s-2.18 1-2.18 2.75c0 1.74.79 2.75 2.18 2.75s2.18-1.01 2.18-2.75zm2.92-3.69h1.12v1.16h.11c.37-.81 1.09-1.29 2.21-1.29 1.65 0 2.58.98 2.58 2.73V27h-1.18v-4.48c0-1.33-.56-1.96-1.74-1.96s-1.93.79-1.93 2.08V27h-1.18v-7.37zm14.08 5.46c-.36 1.26-1.49 2.04-3.1 2.04-2.04 0-3.32-1.48-3.32-3.81 0-2.32 1.3-3.82 3.32-3.82 1.99 0 3.2 1.42 3.2 3.71v.45h-5.3v.05c.06 1.46.88 2.38 2.13 2.38.95 0 1.59-.35 1.9-1h1.17zm-5.2-2.38h4.06c-.03-1.31-.81-2.17-1.98-2.17s-1.99.86-2.08 2.17z"
+          fill="#fff" />
+        <path fill="none" d="M0 0h44v44H0z" /></svg>
+    </div>
+    <div class="nav-icon nav-watch">
+      <?xml version="1.0" encoding="utf-8"?>
+      <!-- Generator: Adobe Illustrator 21.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+      <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+        width="40px" height="44px" viewBox="0 0 40 44" style="enable-background:new 0 0 40 44;" xml:space="preserve">
+        <g id="Assets_Small">
+        </g>
+        <g id="Assets_Large">
+          <g id="Watch">
+            <path style="fill:#FFFFFF;" d="M4.1,27H2.93l-2.69-9.86h1.29l1.96,8.02h0.08l2.21-8.02h1.24l2.21,8.02h0.08l1.96-8.02h1.29
+      			L9.88,27H8.72l-2.27-7.79H6.37L4.1,27z M13.03,24.94c0-1.32,0.97-2.08,2.69-2.18l2.13-0.13v-0.67c0-0.91-0.57-1.41-1.67-1.41
+      			c-0.88,0-1.5,0.33-1.66,0.92h-1.19c0.16-1.18,1.32-1.96,2.89-1.96c1.8,0,2.8,0.92,2.8,2.45V27h-1.12v-1.09h-0.11
+      			c-0.48,0.79-1.29,1.22-2.27,1.22C14.09,27.13,13.03,26.28,13.03,24.94z M17.84,24.25v-0.68l-1.98,0.13
+      			c-1.12,0.08-1.61,0.46-1.61,1.2c0,0.75,0.64,1.19,1.49,1.19C16.94,26.1,17.84,25.31,17.84,24.25z M22.72,17.72v1.91h1.64v0.98
+      			h-1.64v4.17c0,0.87,0.33,1.24,1.09,1.24c0.21,0,0.33-0.01,0.55-0.03v0.99c-0.23,0.04-0.46,0.07-0.69,0.07
+      			c-1.52,0-2.13-0.56-2.13-1.97v-4.47h-1.19v-0.98h1.19v-1.91H22.72z M30.8,21.89c-0.19-0.73-0.84-1.33-1.9-1.33
+      			c-1.33,0-2.16,1.06-2.16,2.73c0,1.7,0.85,2.78,2.16,2.78c0.99,0,1.68-0.46,1.9-1.29h1.19c-0.21,1.35-1.31,2.35-3.08,2.35
+      			c-2.06,0-3.38-1.5-3.38-3.84c0-2.3,1.31-3.79,3.38-3.79c1.79,0,2.88,1.07,3.09,2.39H30.8z M33.66,16.71h1.18v4.09h0.11
+      			c0.37-0.81,1.14-1.29,2.27-1.29c1.56,0,2.54,1,2.54,2.73V27h-1.18v-4.48c0-1.31-0.59-1.96-1.7-1.96c-1.32,0-2.04,0.83-2.04,2.08
+      			V27h-1.18V16.71z" />
+            <rect x="0" y="0" style="fill:none;" width="40" height="44" />
+          </g>
+        </g>
+      </svg>
+    </div>
+    <div class="nav-icon nav-tv">
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="44" viewBox="0 0 18 44">
+        <path
+          d="M3.65 27v-8.76H.47v-1.11h7.59v1.11H4.88V27H3.65zm9.02 0l-3.64-9.86h1.29l2.9 8.27h.11l2.9-8.27h1.29L13.89 27h-1.22z"
+          fill="#fff" />
+        <path fill="none" d="M0 0h18v44H0z" /></svg>
+    </div>
+    <div class="nav-icon nav-shop-bag">
+      <div class="dropdown show nav-dropdown">
+        <button class="btn dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
+          <svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 44">
+            <defs>
+              <style>
+                .cls-1 {
+                  fill: #1D1D1F;
+                }
+
+                .cls-2 {
+                  fill: #fff;
+                }
+              </style>
+            </defs>
+            <title>image_large_1</title>
+            <g id="bag_large">
+              <rect id="boundingbox" class="cls-1" width="17" height="44" />
+              <path id="bag" class="cls-2"
+                d="M14.5,14H12.712a4.227,4.227,0,0,0-8.424,0H2.5A2.5,2.5,0,0,0,0,16.5v11A2.5,2.5,0,0,0,2.5,30h12A2.5,2.5,0,0,0,17,27.5v-11A2.5,2.5,0,0,0,14.5,14Zm-6-2.875A3.243,3.243,0,0,1,11.712,14H5.288A3.243,3.243,0,0,1,8.5,11.125ZM16,27.5A1.5,1.5,0,0,1,14.5,29H2.5A1.5,1.5,0,0,1,1,27.5v-11A1.5,1.5,0,0,1,2.5,15h12A1.5,1.5,0,0,1,16,16.5Z" />
+            </g>
+          </svg>
+        </button>
+        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink" style="width: 350px;">
+          <a class="dropdown-item" href="#">
+
+          </a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="#">
+            <div style="max-width: 16px;">
+              <svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 44">
+                <defs>
+                  <style>
+                    .cls-11 {
+                      fill: none;
+                    }
+
+                    .cls-21 {
+                      fill: #1D1D1F;
+                    }
+                  </style>
+                </defs>
+                <title>image_large_1</title>
+                <g id="bag_large">
+                  <rect id="boundingbox" class="cls-11" width="17" height="44" />
+                  <path id="bag" class="cls-21"
+                    d="M14.5,14H12.712a4.227,4.227,0,0,0-8.424,0H2.5A2.5,2.5,0,0,0,0,16.5v11A2.5,2.5,0,0,0,2.5,30h12A2.5,2.5,0,0,0,17,27.5v-11A2.5,2.5,0,0,0,14.5,14Zm-6-2.875A3.243,3.243,0,0,1,11.712,14H5.288A3.243,3.243,0,0,1,8.5,11.125ZM16,27.5A1.5,1.5,0,0,1,14.5,29H2.5A1.5,1.5,0,0,1,1,27.5v-11A1.5,1.5,0,0,1,2.5,15h12A1.5,1.5,0,0,1,16,16.5Z" />
+                </g>
+              </svg>購物袋
+            </div>
+          </a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="#">
+            <div style="max-width: 27px;">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 23 23">
+                <defs>
+                  <style>
+                    .a {
+                      fill: none;
+                    }
+
+                    .b {
+                      fill: #131313;
+                    }
+                  </style>
+                </defs>
+                <title>CubeBox_13px@1x</title>
+                <g>
+                  <rect class="a" width="23" height="23" />
+                  <path class="b"
+                    d="M18.077,6.924l-5.75-3.086a1.743,1.743,0,0,0-1.654,0L4.923,6.923A1.747,1.747,0,0,0,4,8.466v6.02a1.746,1.746,0,0,0,.923,1.542l5.75,3.086a1.732,1.732,0,0,0,.573.178.447.447,0,0,0,.508,0,1.732,1.732,0,0,0,.573-.178l5.75-3.086A1.747,1.747,0,0,0,19,14.485V8.466A1.746,1.746,0,0,0,18.077,6.924ZM11.146,4.718a.748.748,0,0,1,.709,0L17.4,7.694,14.99,9.051,9.1,5.818Zm.354,6.3L5.6,7.694,8.045,6.383l5.919,3.246ZM5.4,15.146a.748.748,0,0,1-.4-.661V8.5l6,3.381v6.272Zm12.209,0L12,18.155V11.883l3.224-1.817a.467.467,0,0,0,.045-.025L18,8.5v5.983A.749.749,0,0,1,17.6,15.146Z" />
+                </g>
+              </svg>訂單
+            </div>
+          </a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="/users/logout">
+            <i class="far fa-user-circle"></i>登入
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
   {{{ body }}}
-  <!--- 三個大括號會將傳過來的資料當作HTML解析 兩個大括號是純文字 --->
 
 
-  <!-- Footer -->
+  <hr>
   <footer class="page-footer font-small indigo">
-    <!-- Footer Links -->
     <div class="container text-center text-md-left footer-container">
-
-      <!-- Grid row -->
-      <div class="row foot-info">
-        <!-- Grid column -->
+      <div class="row">
         <div class="col-md-3 mx-auto">
-          <!-- Links -->
-          <h5 class="font-weight-bold text-uppercase mt-3 mb-4">探索</h5>
-          <ul class="list-unstyled">
+          <h6 class="">選購與了解產品</h6>
+          <ul class="footer-list-item list-unstyled">
             <li>
-              <a href="#!">關於我們</a>
+              <a href="#!">Mac</a>
             </li>
             <li>
-              <a href="#!">說明中心</a>
+              <a href="#!">iPad</a>
+            </li>
+            <li>
+              <a href="#!">iPhone</a>
+            </li>
+            <li>
+              <a href="#!">Watch</a>
+            </li>
+            <li>
+              <a href="#!">TV</a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="col-md-3 mx-auto">
+          <h6 class="">Apple Store</h6>
+          <ul class="footer-list-item list-unstyled">
+            <li>
+              <a href="#!">購物車</a>
+            </li>
+            <li>
+              <a href="#!">訂單狀況</a>
+            </li>
+            <li>
+              <a href="#!"></a>
             </li>
           </ul>
         </div>
@@ -124,25 +204,8 @@
         <!-- Grid column -->
         <div class="col-md-3 mx-auto">
           <!-- Links -->
-          <h5 class="font-weight-bold text-uppercase mt-3 mb-4">與我們合作拓展您的業務</h5>
-          <ul class="list-unstyled">
-            <li>
-              <a href="#!">廣告您的餐廳</a>
-            </li>
-            <li>
-              <a href="#!">升級方案</a>
-            </li>
-            <li>
-              <a href="#!">更多資源</a>
-            </li>
-          </ul>
-        </div>
-
-        <!-- Grid column -->
-        <div class="col-md-3 mx-auto">
-          <!-- Links -->
-          <h5 class="font-weight-bold text-uppercase mt-3 mb-4">社群</h5>
-          <ul class="list-unstyled">
+          <h6 class="">社群</h6>
+          <ul class="footer-list-item list-unstyled">
             <li>
               <a class="fab fa-facebook-square fa-lg mr-3" href=""></a>
               <a class="fab fa-instagram fa-lg mr-3" href=""></a>
@@ -153,22 +216,12 @@
         </div>
       </div>
     </div>
-
-    <!-- Copyright -->
-    <div class="copyright text-center py-3"><a class="navbar-brand ml-5" href="/" style='font-size: 20px;'>Feed Your
-        Soul</a>© 2020 FeedYourSoul, Inc. All rights reserved
-      <span>·</span>
-      <a href="">隱私</a>
-      <span>·</span>
-      <a href="">相關條款</a>
-      <span>·</span>
-      <a href="">網站地圖</a>
-    </div>
-    <!-- Copyright -->
   </footer>
-  <!-- Footer -->
+  <hr>
+  <div class="copyright text-center py-3">Copyright ©
+    2020 Apple Inc. 保留一切權利。
+  </div>
 
-  <!--- include javascript files here --->
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
     integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
     crossorigin="anonymous"></script>
@@ -178,7 +231,6 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
     integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
     crossorigin="anonymous"></script>
-  <script src="/javascripts/main.js"></script>
 </body>
 
 </html>
