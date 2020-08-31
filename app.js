@@ -3,17 +3,20 @@ const exphbs = require('express-handlebars')
 const bodyParser = require('body-parser')
 const flash = require('connect-flash')
 const session = require('express-session')
-const passport = require('./config/passport')
 
 const app = express()
 const PORT = 3000
 
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config()
+}
+const passport = require('./config/passport')
 app.engine('hbs', exphbs({ extname: '.hbs' }))
 app.set('view engine', 'hbs')
 app.use(express.static('public'))
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(session({
-  secret: 'JH',
+  secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
   cookie: {
