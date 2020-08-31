@@ -10,7 +10,6 @@ router.post('/login', passport.authenticate('local', {
   failureRedirect: '/login',
   failureFlash: true
 }),userController.login)
-router.get('/', (req, res) => res.render('index'))
 router.get('/logout', userController.logout)
 
 router.get('/auth/facebook', passport.authenticate('facebook', {
@@ -20,6 +19,8 @@ router.get('/auth/facebook/callback', passport.authenticate('facebook', {
   successRedirect: '/',
   failureRedirect: '/login'
 }))
+
+router.get('/', (req, res) => res.render('index'))
 
 
 module.exports = router

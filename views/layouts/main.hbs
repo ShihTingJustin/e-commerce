@@ -153,9 +153,15 @@
             </div>
           </a>
           <div class="dropdown-divider"></div>
+          {{#if user}}
+          <a class="dropdown-item" href="/logout">
+            <i class="far fa-user-circle"></i>登出 {{ user.name }}
+          </a>
+          {{else}}
           <a class="dropdown-item" href="/login">
             <i class="far fa-user-circle"></i>登入
           </a>
+          {{/if}}
         </div>
       </div>
     </div>
