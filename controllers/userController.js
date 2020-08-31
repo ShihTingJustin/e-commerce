@@ -57,7 +57,17 @@ const userController = {
         })
           .catch(err => console.log(err))
       })
+  },
+
+  loginPage: (req, res) => {
+    res.render('login')
+  },
+  
+  login: (req, res) => {
+    req.flash('success_msg', "Login successfully.")
+    res.redirect('/')
   }
+
 }
 
 module.exports = userController
