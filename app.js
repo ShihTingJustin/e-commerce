@@ -17,6 +17,7 @@ app.use(express.static('public'))
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(session({
   secret: process.env.SESSION_SECRET,
+  name: 'ec',
   resave: false,
   saveUninitialized: false,
   cookie: {

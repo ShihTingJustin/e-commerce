@@ -7,6 +7,7 @@ const cartController = require('../controllers/cartController')
 
 router.get('/products', productController.getProducts)
 router.get('/cart', cartController.getCart)
+router.post('/cart', cartController.postCart)
 
 router.get('/register', userController.registerPage)
 router.post('/register', userController.register)
