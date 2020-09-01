@@ -1,0 +1,71 @@
+<div class="row">
+  <div class="col-md-9">
+    <div class="row">
+      {{#each products.rows}}
+      <div class="col-md-4">
+        <div class="card mb-4 shadow-sm">
+          <img class="bd-placeholder-img card-img-top" width="100%" height="225" src={{this.image}}></img>
+          <div class="card-body">
+            <p class="card-text">
+            <h4><a href="/products/{{this.id}}">{{this.id}} {{this.name}}</a></h4>
+            <span>{{this.description}}</span>
+            </p>
+            <div class="d-flex justify-content-between align-items-center">
+              <small class="text-muted">$ {{this.price}}</small>
+              <div class="btn-group">
+                <form action="/cart" method="POST">
+                  <input type="hidden" name="productId" value="{{this.id}}">
+                  <button type="submit" class="btn btn-sm btn-outline-secondary">Add to Cart</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {{/each}}
+    </div>
+  </div>
+  <nav class="col-md-3 d-none d-md-block bg-light sidebar">
+    <div class="sidebar-sticky">
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">
+          {{#each cart.items}}
+          <div class="row no-gutters">
+            <div class="col-md-4" style="display: flex;align-items: center;">
+              <img src="{{this.image}}" class="card-img" alt="...">
+            </div>
+            <div class="col-md-8">
+              <div class="card-body">
+                <h5 class="card-title">{{this.name}}</h5>
+                <p>${{this.price}}</p>
+                <div class="btn-group">
+                  <form action="/cartItem/{{this.CartItem.id}}/add" method="POST">
+                    <button type="submit" class="btn btn-sm btn-outline-secondary">+</button>
+                  </form>
+                  <span style="margin: 0 20px;">{{this.CartItem.quantity}}</span>
+                  <form action="/cartItem/{{this.CartItem.id}}/sub" method="POST">
+                    <button type="submit" class="btn btn-sm btn-outline-secondary">-</button>
+                  </form>
+
+                  <form action="/cartItem/{{this.CartItem.id}}?_method=DELETE" method="POST">
+                    <button type="submit" class="btn btn-link">
+                      <i class="fas fa-trash"></i>
+                    </button>
+                  </form>
+
+                </div>
+              </div>
+            </div>
+          </div>
+          {{/each}}
+        </li>
+      </ul>
+      <hr>
+      <li class="list-group-item">
+        Total: ${{totalPrice}}
+        <a href="/cart"><button class="btn btn-primary">Go to Cart</button></a>
+      </li>
+
+    </div>
+  </nav>
+</div>

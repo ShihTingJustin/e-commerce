@@ -1,0 +1,86 @@
+<h1 class="text-center">購物袋</h1>
+
+<div class="mx-auto" style="width: 90%;">
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Price</th>
+        <th scope="col">quantity</th>
+        <th scope="col">Subtotal</th>
+        <th scope="col">#</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each cart.items}}
+      <tr>
+        <td>
+          <div style="display: flow-root;">
+            <img src="{{this.image}}" class="card-img" alt="..." style="height: 100px;width: auto;">
+            <span>{{this.name}}</span>
+          </div>
+        </td>
+        <td>
+          <p>$ {{this.price}}</p>
+        </td>
+        <td>
+          <div style="display: flex;">
+            <form action="/cartItem/{{this.CartItem.id}}/add" method="POST">
+              <button type="submit" class="btn btn-sm btn-outline-secondary">+</button>
+            </form>
+            <span style="margin: 0 20px;">
+              {{this.CartItem.quantity}}
+            </span>
+            <form action="/cartItem/{{this.CartItem.id}}/sub" method="POST">
+              <button type="submit" class="btn btn-sm btn-outline-secondary">-</button>
+            </form>
+          </div>
+        </td>
+        <td>{{this.price}} * {{this.CartItem.quantity}}</td>
+        <td>
+          <form action="/cartItem/{{this.CartItem.id}}?_method=DELETE" method="POST">
+            <button type="submit" class="btn btn-link">
+              <i class="fas fa-trash"></i>
+            </button>
+          </form>
+        </td>
+      </tr>
+      {{/each}}
+      <tr>
+        <td></td>
+        <td></td>
+        <td style="text-align: right;">
+          <h2>Total: </h2>
+        </td>
+        <td>
+          <h2>{{totalPrice}}</h2>
+        </td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="row mx-auto">
+  <div class="col-md-4">
+    <form action="order" method="POST">
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" class="form-control" id="name" placeholder="Enter name" name="name">
+      </div>
+      <div class="form-group">
+        <label for="phone">Phone</label>
+        <input type="text" class="form-control" id="phone" placeholder="Enter phone" name="phone">
+      </div>
+      <div class="form-group">
+        <label for="address">Address</label>
+        <input type="text" class="form-control" id="address" placeholder="Enter address" name="address">
+      </div>
+      <input type="hidden" name="cartId" value="{{cart.id}}">
+      <input type="hidden" name="amount" value="{{totalPrice}}">
+      <input type="hidden" name="shipping_status" value="0">
+      <input type="hidden" name="payment_status" value="0">
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  </div>
+</div>
