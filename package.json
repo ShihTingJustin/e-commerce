@@ -19,6 +19,7 @@
     "express": "^4.17.1",
     "express-handlebars": "^5.1.0",
     "express-session": "^1.17.1",
+    "faker": "^5.1.0",
     "mysql2": "^2.1.0",
     "passport": "^0.4.1",
     "passport-facebook": "^3.0.0",
