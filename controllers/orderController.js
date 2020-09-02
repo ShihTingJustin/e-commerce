@@ -3,6 +3,15 @@ const Cart = db.Cart
 const CartItem = db.CartItem
 const Order = db.Order
 const OrderItem = db.OrderItem
+const nodemailer = require('nodemailer')
+
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: process.env.GMAIL_ACCOUNT,
+    pass: process.env.GMAIL_PW
+  }
+})
 
 const orderController = {
   getOrders: (req, res) => {
@@ -47,6 +56,23 @@ const orderController = {
               where: { cartId: req.body.cartId }
             })
           }).then(() => { return res.redirect('/orders') })
+            .then(() => {
+              // send order confirmation email
+              let mailOptions = {
+                from: process.env.GMAIL_ACCOUNT,
+                to: process.env.GMAIL_ACCOUNT,
+                subject: `${order.id} 訂單成立`,
+                text: `${order.id} 訂單成立`
+              }
+
+              return transporter.sendMail(mailOptions, (err, info) => {
+                if (err) {
+                  console.log(err)
+                } else {
+                  console.log('Email sent: ' + info.response)
+                }
+              })
+            })
         })
       })
   },
