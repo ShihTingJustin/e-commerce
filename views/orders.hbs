@@ -12,9 +12,9 @@
       <tbody>
         {{#each this.items}}
         <tr>
-          <td>{{this.name}}</td>
-          <td>{{this.OrderItem.quantity}}</td>
-          <td>{{this.price}}</td>
+          <td>{{this.dataValues.name}}</td>
+          <td>{{this.dataValues.OrderItem.dataValues.quantity}}</td>
+          <td>{{this.dataValues.price}}</td>
         </tr>
         {{/each}}
         <tr>
@@ -48,7 +48,7 @@
       <a href="/order/{{this.id}}/payment"><button class="btn btn-primary">立即付款</button></a>
     </div>
   </div>
-  
+
 </div>
 <hr />
 {{/each}}

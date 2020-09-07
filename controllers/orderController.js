@@ -5,6 +5,7 @@ const Cart = db.Cart
 const CartItem = db.CartItem
 const Order = db.Order
 const OrderItem = db.OrderItem
+const Product = db.Product
 const nodemailer = require('nodemailer')
 const crypto = require("crypto")
 
@@ -104,11 +105,11 @@ function getTradeInfo(Amt, Desc, email) {
 const orderController = {
   getOrders: (req, res) => {
     Order.findAll({
-      raw: true,
-      nest: true,
-      include: 'items'
+      include: [{ model: Product, as: "items" }]
     }).then(orders => {
-      console.log(orders)
+      orders = orders.map(order => ({
+        ...order.dataValues
+      }))
       return res.render('orders', { orders })
     })
   },
@@ -128,7 +129,7 @@ const orderController = {
         }).then(order => {    // put product in order from cart
           let results = []
           for (let i = 0; i < cart.items.length; i++) {
-            // console.log(order.id, cart.items[i].id)
+            console.log(cart.toJSON().items)
             results.push(
               OrderItem.create({
                 OrderId: order.id,
