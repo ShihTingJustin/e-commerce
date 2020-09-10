@@ -6,8 +6,9 @@ const productController = require('../controllers/productController')
 const cartController = require('../controllers/cartController')
 const orderController = require('../controllers/orderController')
 
-
+// R means Redis
 router.get('/products', productController.getProducts)
+router.get('/productsR', productController.getProductsR)
 router.get('/cart', cartController.getCart)
 router.post('/cart', cartController.postCart)
 router.post('/cartItem/:id/add', cartController.addCartItem)

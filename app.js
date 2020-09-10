@@ -8,36 +8,11 @@ const methodOverride = require('method-override')
 const app = express()
 const PORT = 3000
 
-
-
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
 const passport = require('./config/passport')
-
-
-// redis
-const db = require('./models')
-const Product = db.Product
-const redis = require("redis");
-const client = redis.createClient();
-client.on('connect', () => console.log('Redis client connected'))
-client.on('error', err => console.log('Something went wrong ' + err))
-
-client.set("key", "value", redis.print);
-client.get("key", redis.print);
-
-app.use((req, res, next) => {
-  Product.findAll({ raw: true, nest: true })
-    .then(products => {
-      products.forEach(product => {        
-        client.hmset(product.id, product)
-        client.hgetall(product.id, (err, object) => console.log(object))
-      })
-    })
-    next()
-})
-
+const redis = require('./config/redis')
 
 
 app.engine('hbs', exphbs({ extname: '.hbs' }))
