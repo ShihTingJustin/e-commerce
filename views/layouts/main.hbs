@@ -14,7 +14,9 @@
 
 <body>
   <span class="text-center">{{> message}}</span>
-  <nav class="navbar d-flex justify-content-around">
+  <nav class="navbar" style="z-index: -2; height: 75px; background: transparent"></nav>
+  <nav class="navbar fixed-top d-flex justify-content-around align-items-center">
+    
     <a href="/">
       <div class="nav-icon nav-apple-logo">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="44" viewBox="0 0 16 44">
@@ -81,12 +83,12 @@
     <div class="nav-icon nav-shop-bag">
       <div class="dropdown show nav-dropdown">
         <button class="btn dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
-          aria-haspopup="true" aria-expanded="false">
+          aria-haspopup="true" aria-expanded="false" >
           <svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 44">
             <defs>
               <style>
                 .cls-1 {
-                  fill: #1D1D1F;
+                  fill: rgb(58, 58, 58);
                 }
 
                 .cls-2 {
@@ -109,7 +111,7 @@
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="/cart">
             <div style="max-width: 16px;">
-              <svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 44">
+              <svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 7 44">
                 <defs>
                   <style>
                     .cls-11 {
