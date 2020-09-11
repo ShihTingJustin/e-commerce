@@ -1,12 +1,14 @@
 const db = require('../models')
-const redis = require('redis')
-const client = redis.createClient()
-const { promisify } = require("util")
-const getAsync = promisify(client.get).bind(client)
-const setAsync = promisify(client.set).bind(client)
-const randomkeyAsync = promisify(client.randomkey).bind(client)
-const keysAsync = promisify(client.keys).bind(client)
-const mgetAsync = promisify(client.mget).bind(client)
+// const redis = require('redis')
+// const client = redis.createClient()
+// const { promisify } = require("util")
+// const getAsync = promisify(client.get).bind(client)
+// const setAsync = promisify(client.set).bind(client)
+// const randomkeyAsync = promisify(client.randomkey).bind(client)
+// const keysAsync = promisify(client.keys).bind(client)
+// const mgetAsync = promisify(client.mget).bind(client)
+const asyncRedis = require("async-redis");
+const client = asyncRedis.createClient();
 
 const Product = db.Product
 const Cart = db.Cart
@@ -37,87 +39,53 @@ const productController = {
   },
 
   getProductsR: (req, res) => {
-    const cacheCheck = new Promise((resolve, reject) => {
-      randomkeyAsync().then(cache => resolve(cache))
-        .catch(err => reject(err))
-    })
-
-    const saveProductsToRedis = function () {
-      return new Promise((resolve, reject) => {
-        return Product.findAll({
+    const getProductsRedisAsync = async () => {
+      const cacheCheck = await client.randomkey()
+      if (!cacheCheck) {
+        await Product.findAll({
           raw: true,
           nest: true
         }).then(products => {
-          products.forEach(product => {
-            setAsync(product.id, JSON.stringify(product))
-            return resolve(true)
-          })
-        }).catch(err => reject(err))
-      })
-    }
+          products.forEach(product =>
+            client.set(product.id, JSON.stringify(product))
+          )
+        }).catch(err => console.log(err))
+        const redisCache = []
+        const keys = await client.keys('*')
+        const redisArr = await client.mget(...keys)
+        redisArr.forEach(product => redisCache.push(JSON.parse(product)))
 
-    const getKeys = function () {
-      return new Promise((resolve, reject) => {
-        keysAsync('*')
-          .then(keys => {
-            resolve(keys)
-          }).catch(err => reject(err))
-      })
-    }
-
-    const getRedisProducts = function (keys) {
-      return new Promise((resolve, reject) => {
-        mgetAsync(...keys).then(products => {
-          const productsCache = []
-          products.forEach(product => productsCache.push(JSON.parse(product)))
-          resolve(productsCache)
-        }).catch(err => reject(err))
-      })
-    }
-
-    async function useRedisCache() {
-      try {
-        if (!await cacheCheck) {
-          if (await saveProductsToRedis()) {
-            const keys = await getKeys()
-            if (keys) {
-              const productsCache = await getRedisProducts(keys)
-              return Cart.findByPk(req.session.cartId, { include: 'items' })
-                .then(cart => {
-                  cart = cart ? cart.toJSON() : { items: [] }
-                  let totalPrice = cart.items.length > 0 ? cart.items.map(d => d.price * d.CartItem.quantity).reduce((a, b) => a + b) : 0
-                  return res.render('products', {
-                    products: productsCache,
-                    cart,
-                    totalPrice
-                  })
-                }).catch(err => console.log(err))
-                .then(() => console.log('Cache Completed !'))
-            }
-          }
-        }
-
-        const keys = await getKeys()
-        if (keys) {
-          const productsCache = await getRedisProducts(keys)
-          return Cart.findByPk(req.session.cartId, { include: 'items' })
-            .then(cart => {
-              cart = cart ? cart.toJSON() : { items: [] }
-              let totalPrice = cart.items.length > 0 ? cart.items.map(d => d.price * d.CartItem.quantity).reduce((a, b) => a + b) : 0
-              return res.render('products', {
-                products: productsCache,
-                cart,
-                totalPrice
-              })
-            }).catch(err => console.log(err))
-            .then(() => console.log('Cache is existed, Just read !'))
-        }
-      } catch (error) {
-        console.log(error)
+        return Cart.findByPk(req.session.cartId, { include: 'items' })
+          .then(cart => {
+            cart = cart ? cart.toJSON() : { items: [] }
+            let totalPrice = cart.items.length > 0 ? cart.items.map(itm => itm.price * itm.quantity).reduce((a, b) => a + b) : 0
+            return res.render('products', {
+              products: redisCache,
+              cart,
+              totalPrice
+            })
+          }).catch(err => console.log(err))
+          .then(() => console.log('Cache Completed !'))
+      } else {
+        const redisCache = []
+        const keys = await client.keys('*')
+        const redisArr = await client.mget(...keys)
+        redisArr.forEach(product => redisCache.push(JSON.parse(product)))
+        return Cart.findByPk(req.session.cartId, { include: 'items' })
+          .then(cart => {
+            cart = cart ? cart.toJSON() : { items: [] }
+            let totalPrice = cart.items.length > 0 ? cart.items.map(itm => itm.price * itm.quantity).reduce((a, b) => a + b) : 0
+            return res.render('products', {
+              products: redisCache,
+              cart,
+              totalPrice
+            })
+          }).catch(err => console.log(err))
+          .then(() => console.log('Cache is existed, Just read !'))
       }
     }
 
-    useRedisCache()
+    getProductsRedisAsync()
   }
 
 }
