@@ -13,11 +13,20 @@ body {
 }
 
 .navbar {
-  background-color: #1D1D1F; 
+  background-color: rgb(58, 58, 58); 
   color:#f5f5f7;
 }
 
-.section-content {
+.nav-icon {
+  margin: -16px 0;
+  padding: 0 25px;
+}
+
+.nav-dropdown button:active {
+  outline: none;
+}
+
+.section-content {  
   background: #fbfbfd;
   height: 44px;
 }
@@ -37,7 +46,13 @@ body {
   border: 1px solid white;
 }
 
+#dropdownMenuLink {
+  color: rgb(58, 58, 58);
+}
 
+#dropdownMenuLink:focus {
+ 
+}
 
 .unit-copy-wrapper {
   position: absolute;
@@ -64,7 +79,6 @@ body {
 
 .unit-image-wrapper img {
   width: 100%;
-  height: 100%;
 }
 
 .footer-list-item a {
