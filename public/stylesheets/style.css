@@ -13,12 +13,17 @@ body {
 }
 
 .navbar {
-  background-color: rgba(58, 58, 58, 0.98); 
+  background-color: rgb(58, 58, 58); 
   color:#f5f5f7;
 }
 
 .nav-icon {
-  margin: 0 0;
+  margin: -16px 0;
+  padding: 0 25px;
+}
+
+.nav-dropdown button:active {
+  outline: none;
 }
 
 .section-content {  
@@ -46,8 +51,7 @@ body {
 }
 
 #dropdownMenuLink:focus {
-  border: 0px solid transparent;
-  outline-color: transparent;
+ 
 }
 
 .unit-copy-wrapper {
