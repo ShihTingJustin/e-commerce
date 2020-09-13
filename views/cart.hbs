@@ -1,5 +1,5 @@
-<h1 class="text-center">購物袋</h1>
-
+<h1 class="text-center mt-4">購物袋</h1>
+{{#if cart.items}}
 <div class="mx-auto" style="width: 90%;">
   <table class="table">
     <thead>
@@ -84,3 +84,7 @@
     </form>
   </div>
 </div>
+
+{{else}}
+{{> empty}}
+{{/if}}

@@ -94,6 +94,11 @@ body {
   color: #86868B;
 }
 
+.empty-word {
+  font-size: xx-large;
+}
+
+
 /* login page */
 .login-input-group {
   margin: 3rem 0;
