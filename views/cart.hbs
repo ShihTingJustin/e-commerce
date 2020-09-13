@@ -1,14 +1,14 @@
-<h1 class="text-center mt-4">購物袋</h1>
+<h1 class="text-center mt-4">{{#if totalPrice}}以下是您購物袋內的商品 NT${{totalPrice}}{{/if}}</h1>
 {{#if cart.items}}
 <div class="mx-auto" style="width: 90%;">
-  <table class="table">
+  <table class="table text-center">
     <thead>
       <tr>
-        <th scope="col">#</th>
-        <th scope="col">Price</th>
-        <th scope="col">quantity</th>
-        <th scope="col">Subtotal</th>
-        <th scope="col">#</th>
+        <th scope="col">商品</th>
+        <th scope="col">價格</th>
+        <th scope="col">數量</th>
+        <th scope="col">小計</th>
+        <th scope="col"></th>
       </tr>
     </thead>
     <tbody>
@@ -17,7 +17,7 @@
         <td>
           <div style="display: flow-root;">
             <img src="{{this.image}}" class="card-img" alt="..." style="height: 100px;width: auto;">
-            <span>{{this.name}}</span>
+            <span class="ml-3">{{this.name}}</span>
           </div>
         </td>
         <td>
@@ -50,10 +50,10 @@
         <td></td>
         <td></td>
         <td style="text-align: right;">
-          <h2>Total: </h2>
+          <h2>你的總金額 </h2>
         </td>
         <td>
-          <h2>{{totalPrice}}</h2>
+          <h2>NT${{totalPrice}}</h2>
         </td>
         <td></td>
       </tr>

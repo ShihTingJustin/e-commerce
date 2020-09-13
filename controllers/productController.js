@@ -1,12 +1,4 @@
 const db = require('../models')
-// const redis = require('redis')
-// const client = redis.createClient()
-// const { promisify } = require("util")
-// const getAsync = promisify(client.get).bind(client)
-// const setAsync = promisify(client.set).bind(client)
-// const randomkeyAsync = promisify(client.randomkey).bind(client)
-// const keysAsync = promisify(client.keys).bind(client)
-// const mgetAsync = promisify(client.mget).bind(client)
 const asyncRedis = require("async-redis");
 const client = asyncRedis.createClient();
 

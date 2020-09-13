@@ -12,8 +12,8 @@ const cartController = {
         let totalPrice = cart.items.length > 0 ? cart.items.map(d => d.price * d.CartItem.quantity).reduce((a, b) => a + b) : 0
         return res.render('cart', {
           cart,
-          totalPrice,
-          emptyPageWord: '商品'
+          totalPrice: Number(totalPrice).toLocaleString(),
+          cartEmptyPage: 1
         })
       })
   },

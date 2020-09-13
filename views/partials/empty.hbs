@@ -1,3 +1,9 @@
-<div class="mt-5" style="height: 800px">
-  <p class="empty-word text-center">目前沒有任何{{emptyPageWord}}。</p>
+<div class="mt-5 d-flex justify-content-center" style="height: 800px">
+  <div class="text-left">
+    <p class="empty-word ">
+      {{#if cartEmptyPage}}購物袋中沒有任何商品{{/if}}。
+    </p>
+    <p>所有訂單均享免額外付費運送服務。</p>
+    <a href="/products" class="btn keep-looking-btn w-100 mt-3">繼續選購</a>
+  </div>
 </div>
