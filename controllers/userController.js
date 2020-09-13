@@ -50,7 +50,8 @@ const userController = {
         return User.create({
           name,
           email,
-          password: bcrypt.hashSync(password, bcrypt.genSaltSync(10), null)
+          password: bcrypt.hashSync(password, bcrypt.genSaltSync(10), null),
+          role: 'user'
         }).then(user => {
           req.flash('success_msg', 'Register successfully.')
           return res.redirect('/register')
