@@ -1,34 +1,30 @@
 <div class="row my-3">
   <div class="col-10 col-md-8 col-lg-5 m-auto">
-    <div class="card card-body" id="register-card">
-      <h1 class="text-center mt-3">Register</h1>
+    <div class="card card-body border-0 mb-5" id="register-card">
+      <h1 class="text-center mt-3">註冊</h1>
       <form action="/register" method="POST" onsubmit="return requireFiled()">
         <div class="form-group login-input-group">
-          <input type="name" id="reg-name" name="name" class="form-control" placeholder="Enter Name" value="{{ name }}">
-          <label class="label" id="label-reg-name" for="reg-name">Name</label>
+          <input type="name" id="reg-name" name="name" class="form-control" value="{{ name }}">
+          <label class="label" id="label-reg-name" for="reg-name">名稱</label>
         </div>
         <div class="form-group login-input-group">
-          <input type="email" id="reg-email" name="email" class="form-control" placeholder="Enter Email"
-            value="{{ email }}">
+          <input type="email" id="reg-email" name="email" class="form-control" value="{{ email }}">
           <label class="label" id="label-reg-email" for="reg-email">Email</label>
         </div>
         <div class="form-group login-input-group">
-          <input type="password" id="reg-password" name="password" class="form-control" placeholder="Enter Password"
-            value="{{ password }}">
-          <label class="label" id="label-reg-pd" for="reg-password">Password</label>
+          <input type="password" id="reg-password" name="password" class="form-control" value="{{ password }}">
+          <label class="label" id="label-reg-pd" for="reg-password">密碼</label>
         </div>
         <div class="form-group login-input-group">
-          <input type="password" id="reg-confirmPassword" name="confirmPassword" class="form-control"
-            placeholder="Confirm Password" value="{{ confirmPassword }}">
-          <label class="label" id="label-reg-cpd" for="reg-confirmPassword">Confirm Password</label>
+          <input type="password" id="reg-confirmPassword" name="confirmPassword" class="form-control" value="{{ confirmPassword }}">
+          <label class="label" id="label-reg-cpd" for="reg-confirmPassword">確認密碼</label>
         </div>
-        <button type="submit" class="btn login-btn btn-block" style="margin-bottom: 0.8rem;">Register</button>
+        <button type="submit" class="btn login-btn btn-block" style="margin-bottom: 0.8rem;">註冊</button>
         <a href="/auth/facebook" class="btn fb-login-btn btn-block"><i
-            class="fab fa-facebook-square fa-lg mr-2"></i>Login with
-          Facebook</a>
+            class="fab fa-facebook-square fa-lg mr-2"></i>使用 Facebook 帳號登入</a>
       </form>
       <p class="lead mt-4 text-center">
-        <small><a href="/login" class="text-secondary">Login instead</a></small>
+        <small><a href="/login" class="text-secondary">登入</a></small>
       </p>
     </div>
   </div>

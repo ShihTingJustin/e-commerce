@@ -1,25 +1,22 @@
 <div class="row my-5">
   <div class="col-9 col-md-6 col-lg-4 m-auto">
-    <div class="card card-body" id="login-card">
-      <h1 class="text-center mt-3">Login</h1>
+    <div class="card card-body border-0 mb-5" id="login-card">
+      <h1 class="text-center mt-3">登入</h1>
       <form action="/login" method="POST">
         <div class="form-group login-input-group">
-          <input required type="email" id="login-email" name="email" class="form-control input-area"
-            placeholder="Enter Email" value="{{email}}">
+          <input required type="email" id="login-email" name="email" class="form-control input-area" value="{{email}}">
           <label class="label" id="label-login-email" for="login-email">Email</label>
         </div>
         <div class="form-group login-input-group">
-          <input required type="password" id="login-password" name="password" class="form-control"
-            placeholder="Enter Password" value="{{password}}">
-          <label class="label" id="label-login-pd" for="login-password">Password</label>
+          <input required type="password" id="login-password" name="password" class="form-control" value="{{password}}">
+          <label class="label" id="label-login-pd" for="login-password">密碼</label>
         </div>
-        <button type="submit" class="btn login-btn btn-block " style="margin-bottom: 0.8rem;">Login</button>
+        <button type="submit" class="btn login-btn btn-block " style="margin-bottom: 0.8rem;">登入</button>
         <a href="/auth/facebook" class="btn fb-login-btn btn-block"><i
-            class="fab fa-facebook-square fa-lg mr-2"></i>Login with
-          Facebook</a>
+            class="fab fa-facebook-square fa-lg mr-2"></i>使用 Facebook 帳號登入</a>
       </form>
       <p class="lead mt-4 text-center">
-        <small><a href="/register" class="text-secondary">Create account</a></small>
+        <small><a href="/register" class="text-secondary">註冊帳號</a></small>
       </p>
     </div>
   </div>
