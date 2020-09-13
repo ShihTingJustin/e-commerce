@@ -13,11 +13,20 @@ body {
 }
 
 .navbar {
-  background-color: #1D1D1F; 
+  background-color: rgb(58, 58, 58); 
   color:#f5f5f7;
 }
 
-.section-content {
+.nav-icon {
+  margin: -16px 0;
+  padding: 0 25px;
+}
+
+.nav-dropdown button:active {
+  outline: none;
+}
+
+.section-content {  
   background: #fbfbfd;
   height: 44px;
 }
@@ -37,7 +46,13 @@ body {
   border: 1px solid white;
 }
 
+#dropdownMenuLink {
+  color: rgb(58, 58, 58);
+}
 
+#dropdownMenuLink:focus {
+ 
+}
 
 .unit-copy-wrapper {
   position: absolute;
@@ -64,7 +79,6 @@ body {
 
 .unit-image-wrapper img {
   width: 100%;
-  height: 100%;
 }
 
 .footer-list-item a {
@@ -89,7 +103,7 @@ body {
 .login-input-group input {
   text-align: center;
   border: none;
-  border-bottom: 1px solid #ccc;
+  border-bottom: 1px solid rgb(200,200,205);
   outline: none;
   background: transparent;
   border-radius: 0;
@@ -99,21 +113,18 @@ body {
 
 .login-input-group input:focus {
   box-shadow: none;
-  border-bottom: 2px solid #ff626f;
-}
-
-input::placeholder {
-  font-size: 0.5rem;
+  border-bottom: 2px solid rgb(11,79,192);
 }
 
 input:focus + .label {
-  color: #ff626f;
+  color: rgb(11,79,192);
   font-size: x-small;
   font-weight: bolder;
   transition-duration: 0.3s;
 }
 
 input + .label {
+  color: rgb(200,200,205);
   transition-duration: 0.3s;
 }
 
@@ -161,24 +172,29 @@ input + .label {
   left: 10%;
 }
 
+.login-btn, .fb-login-btn {
+  padding: 10px 0;
+  border-radius: 10px;
+}
 .login-btn {
-  background: #dc3543;
+  background: rgb(12, 88, 220);
   color: #ffffff;
+  transition-duration: 0.3s;
+  
 }
 
 .login-btn:hover {
-  background: #ff626f;
+  background: rgb(71, 129, 230);
   color: #ffffff;
+  transition-duration: 0.3s;
 }
 
 .fb-login-btn {
-  background: #1877f2;
-  color: #ffffff;
+  background: rgb(233, 233, 233);
 }
 
 .fb-login-btn:hover {
-  background: #4f8ee0;
-  color: #ffffff;
+  background: rgba(233, 233, 233, 0.63);
 }
 /* login page */
 

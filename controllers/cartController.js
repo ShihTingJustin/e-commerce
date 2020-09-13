@@ -18,7 +18,7 @@ const cartController = {
   },
 
   postCart: (req, res) => {
-    return Cart.findOrCreate({   // cart exist or not
+    Cart.findOrCreate({   // cart exist or not
       where: {
         id: req.session.cartId || 0
       }
