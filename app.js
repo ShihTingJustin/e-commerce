@@ -15,7 +15,7 @@ const passport = require('./config/passport')
 const redis = require('./config/redis')
 
 
-app.engine('hbs', exphbs({ extname: '.hbs' }))
+app.engine('hbs', exphbs({ extname: '.hbs', helpers: require('./config/handlebars-helpers') }))
 app.set('view engine', 'hbs')
 app.use(express.static('public'))
 

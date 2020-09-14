@@ -30,6 +30,33 @@
 
 </div>
 
+<div class="d-flex justify-content-center">
+  <nav aria-label="Page navigation example">
+    <ul class="pagination">
+      <li class="page-item">
+        <a class="page-link" href="/products?page={{prev}}" aria-label="Previous"> <span
+            aria-hidden="true">&laquo;</span>
+        </a>
+      </li>
+      {{#each totalPage}}
+      {{#ifCond this ../page}}
+      <li class="page-item active">
+        <a class="page-link" href="#">{{this}}</a>
+      </li>
+      {{else}}
+      <li class="page-item">
+        <a class="page-link" href="/products?page={{this}}">{{this}}</a>
+      </li>
+      {{/ifCond}}
+      {{/each}}
+      <a class="page-link" href="/products?page={{next}}" aria-label="Next">
+        <span aria-hidden="true">&raquo;</span>
+      </a>
+      </li>
+    </ul>
+  </nav>
+</div>
+
 {{else}}
 {{!-- with Redis --}}
 <div class="row">
