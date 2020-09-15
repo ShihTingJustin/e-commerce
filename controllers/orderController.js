@@ -105,7 +105,10 @@ function getTradeInfo(Amt, Desc, email) {
 const orderController = {
   getOrders: (req, res) => {
     Order.findAll({
-      include: [{ model: Product, as: "items" }]
+      where: { UserId: req.user.id},
+      include: [{
+        model: Product, as: "items"
+      }]
     }).then(orders => {
       orders = orders.map(order => ({
         ...order.dataValues
@@ -125,11 +128,11 @@ const orderController = {
           phone,
           shipping_status,
           payment_status,
-          amount
+          amount: String(Number(amount)),
+          UserId: req.user.id
         }).then(order => {    // put product in order from cart
           let results = []
           for (let i = 0; i < cart.items.length; i++) {
-            console.log(cart.toJSON().items)
             results.push(
               OrderItem.create({
                 OrderId: order.id,
