@@ -35,14 +35,14 @@
 
   <div class="col-10">
     <ul>
-      {{!-- <li>訂單編號： {{this.id}}</li> --}}
+      {{#ifCond this.payment_status '1'}}<li>訂單編號： {{this.sn}}</li>{{/ifCond}}
       <li>姓名： {{this.name}}</li>
       <li>電話號碼： {{this.phone}}</li>
       <li>地址： {{this.address}}</li>
-      <li>運送狀況： 
+      <li>運送狀況：
         {{#ifCond this.payment_status '0'}}尚未付款{{/ifCond}}
         {{#ifCond this.payment_status '1'}}正在處理{{/ifCond}}
-        </li>
+      </li>
       <li>付款狀況：
         {{#ifCond this.payment_status '0'}}尚未付款{{/ifCond}}
         {{#ifCond this.payment_status '1'}}付款成功{{/ifCond}}
@@ -51,10 +51,11 @@
 
     <div style="display: flex; justify-content: space-around;min-width: 300px;">
       <form action="/order/{{this.id}}/cancel" method="POST">
-        <button type="submit" class="btn btn-primary">取消訂單</button>
+        <button type="submit" class="btn order-cancel-btn px-5 py-3">取消訂單</button>
       </form>
-
-      <a href="/order/{{this.id}}/payment"><button class="btn btn-primary">立即付款</button></a>
+      <a href="/order/{{this.id}}/payment">
+        <button class="btn payment-btn px-5 py-3">繼續前往付款</button>
+      </a>
     </div>
   </div>
 
