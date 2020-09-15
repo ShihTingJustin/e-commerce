@@ -169,18 +169,18 @@ input + .label {
   left: 10%;
 }
 
-.login-btn, .fb-login-btn, .keep-looking-btn, .nav-post-order-btn {
+.login-btn, .fb-login-btn, .keep-looking-btn, .nav-post-order-btn, .cart-post-order-btn {
   padding: 10px 0;
   border-radius: 10px;
 }
-.login-btn, .nav-post-order-btn {
+.login-btn, .nav-post-order-btn, .cart-post-order-btn {
   background: rgb(4, 113, 227);
   color: #ffffff;
   transition-duration: 0.3s;
   
 }
 
-.login-btn:hover, .nav-post-order-btn:hover {
+.login-btn:hover, .nav-post-order-btn:hover, .cart-post-order-btn:hover {
   background: rgb(71, 129, 230);
   color: #ffffff;
   transition-duration: 0.3s;
@@ -215,4 +215,8 @@ input + .label {
   position: absolute;
   left: 200px;
   top: 165px;
+}
+
+.table > tbody > tr > td {
+  vertical-align: middle;
 }

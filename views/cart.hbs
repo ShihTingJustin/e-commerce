@@ -15,16 +15,16 @@
       {{#each cart.items}}
       <tr>
         <td>
-          <div style="display: flow-root;">
+          <div>
             <img src="{{this.image}}" class="card-img" alt="..." style="height: 100px;width: auto;">
             <span class="ml-3">{{this.name}}</span>
           </div>
         </td>
         <td>
-          <p>$ {{this.price}}</p>
+          <div>$ {{this.price}}</div>
         </td>
-        <td>
-          <div style="display: flex;">
+        <td class="">
+          <div class="d-flex justify-content-center align-items-center">
             <form action="/cartItem/{{this.CartItem.id}}/add" method="POST">
               <button type="submit" class="btn btn-sm btn-outline-secondary">+</button>
             </form>
@@ -61,28 +61,31 @@
   </table>
 </div>
 
-<div class="row mx-auto">
-  <div class="col-md-4">
-    <form action="/order" method="POST">
-      <div class="form-group">
-        <label for="name">Name</label>
-        <input type="text" class="form-control" id="name" placeholder="Enter name" name="name">
+<div class="d-flex flex-column align-items-center mb-5">
+  <h1 class="text-center my-5">請您填寫下列收件人資訊。</h1>
+  <form action="/order" method="POST">
+    <div class="d-flex flex-column px-5">
+      <div class="user-order-info-upper d-flex justify-content-around">
+        <div class="form-group mr-3">
+          <label for="name">姓名</label>
+          <input required type="text" class="form-control" id="name" placeholder="Enter name" name="name">
+        </div>
+        <div class="form-group ml-3">
+          <label for="phone">電話</label>
+          <input required type="text" class="form-control" id="phone" placeholder="Enter phone" name="phone">
+        </div>
       </div>
       <div class="form-group">
-        <label for="phone">Phone</label>
-        <input type="text" class="form-control" id="phone" placeholder="Enter phone" name="phone">
-      </div>
-      <div class="form-group">
-        <label for="address">Address</label>
-        <input type="text" class="form-control" id="address" placeholder="Enter address" name="address">
+        <label for="address">地址</label>
+        <input required type="text" class="form-control" id="address" placeholder="Enter address" name="address">
       </div>
       <input type="hidden" name="cartId" value="{{cart.id}}">
       <input type="hidden" name="amount" value="{{totalPrice}}">
       <input type="hidden" name="shipping_status" value="0">
       <input type="hidden" name="payment_status" value="0">
-      <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
-  </div>
+      <button type="submit" class="btn cart-post-order-btn my-4">Submit</button>
+    </div>
+  </form>
 </div>
 
 {{else}}
