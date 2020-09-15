@@ -206,3 +206,13 @@ input + .label {
 .nav-cart-item {
   color: rgb(3, 102, 204) 
 }
+
+.empty-page-content-wrapper {
+  position: relative;
+}
+
+.empty-page-content {
+  position: absolute;
+  left: 200px;
+  top: 165px;
+}
