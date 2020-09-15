@@ -195,9 +195,14 @@ input + .label {
 }
 /* login page */
 
-.alert {
+.alert-wrapper {
   position: absolute;
+  left: 0px;
+  top: 0px;
   width: 100%;
-  margin-top: 1rem;
   z-index: 1;
+}
+
+.nav-cart-item {
+  color: rgb(3, 102, 204) 
 }
