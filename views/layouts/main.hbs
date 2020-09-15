@@ -15,7 +15,6 @@
 <body>
   <nav class="navbar" style="z-index: -2; height: 45px; background: transparent"></nav>
   <nav class="navbar fixed-top d-flex justify-content-around align-items-center">
-    <span class="text-center" style="z-index:2">{{> message}}</span>
     <a href="/">
       <div class="nav-icon nav-apple-logo ml-xl-5">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="44" viewBox="0 0 16 44">
@@ -160,7 +159,7 @@
           <a class="dropdown-item d-flex flex-column align-items-center justify-content-center"
             style="border-radius: 20px;" href="/logout">
             <div><i class="far fa-user-circle"></i>登出</div>
-            <small>{{ user.email }}</small>
+            <small>{{#if user.name}}{{user.name}}{{else}}{{ user.email }}{{/if}}</small>
           </a>
           {{else}}
           <a class="dropdown-item d-flex justify-content-center align-items-center" style="border-radius: 20px;"
@@ -172,6 +171,7 @@
       </div>
     </div>
   </nav>
+  <span class="text-center" style="z-index:2">{{> message}}</span>
 
   {{{ body }}}
 
