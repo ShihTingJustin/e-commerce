@@ -169,28 +169,28 @@ input + .label {
   left: 10%;
 }
 
-.login-btn, .fb-login-btn, .keep-looking-btn, .nav-post-order-btn, .cart-post-order-btn {
+.login-btn, .fb-login-btn, .keep-looking-btn, .nav-post-order-btn, .cart-post-order-btn, .order-cancel-btn, .payment-btn {
   padding: 10px 0;
   border-radius: 10px;
 }
-.login-btn, .nav-post-order-btn, .cart-post-order-btn {
+.login-btn, .nav-post-order-btn, .cart-post-order-btn, .payment-btn {
   background: rgb(4, 113, 227);
   color: #ffffff;
   transition-duration: 0.3s;
   
 }
 
-.login-btn:hover, .nav-post-order-btn:hover, .cart-post-order-btn:hover {
+.login-btn:hover, .nav-post-order-btn:hover, .cart-post-order-btn:hover, .payment-btn:hover {
   background: rgb(71, 129, 230);
   color: #ffffff;
   transition-duration: 0.3s;
 }
 
-.fb-login-btn, .keep-looking-btn {
+.fb-login-btn, .keep-looking-btn, .order-cancel-btn, .back-btn {
   background: rgb(233, 233, 233);
 }
 
-.fb-login-btn:hover, .keep-looking-btn:hover {
+.fb-login-btn:hover, .keep-looking-btn:hover, .order-cancel-btn:hover, .back-btn:hover {
   background: rgba(233, 233, 233, 0.63);
 }
 /* login page */
