@@ -1,4 +1,5 @@
 const bcrypt = require('bcryptjs')
+const passport = require('passport')
 const db = require('../models')
 const User = db.User
 
@@ -50,7 +51,8 @@ const userController = {
         return User.create({
           name,
           email,
-          password: bcrypt.hashSync(password, bcrypt.genSaltSync(10), null)
+          password: bcrypt.hashSync(password, bcrypt.genSaltSync(10), null),
+          role: 'user'
         }).then(user => {
           req.flash('success_msg', 'Register successfully.')
           return res.redirect('/register')
@@ -60,9 +62,10 @@ const userController = {
   },
 
   loginPage: (req, res) => {
-    res.render('login')
+    if (req.isAuthenticated()) res.redirect('/')
+    else res.render('login')
   },
-  
+
   login: (req, res) => {
     req.flash('success_msg', "Login successfully.")
     res.redirect('/')

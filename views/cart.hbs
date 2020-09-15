@@ -1,30 +1,30 @@
-<h1 class="text-center">購物袋</h1>
-
-<div class="mx-auto" style="width: 90%;">
-  <table class="table">
+{{#if cart.items}}
+<h1 class="text-center mt-4">{{#if totalPrice}}以下是您購物袋內的商品 NT${{totalPrice}}{{/if}}</h1>
+<div class="mx-auto my-5" style="width: 90%;">
+  <table class="table text-center">
     <thead>
       <tr>
-        <th scope="col">#</th>
-        <th scope="col">Price</th>
-        <th scope="col">quantity</th>
-        <th scope="col">Subtotal</th>
-        <th scope="col">#</th>
+        <th scope="col">商品</th>
+        <th scope="col">價格</th>
+        <th scope="col">數量</th>
+        <th scope="col">小計</th>
+        <th scope="col"></th>
       </tr>
     </thead>
     <tbody>
       {{#each cart.items}}
       <tr>
         <td>
-          <div style="display: flow-root;">
+          <div>
             <img src="{{this.image}}" class="card-img" alt="..." style="height: 100px;width: auto;">
-            <span>{{this.name}}</span>
+            <span class="ml-3">{{this.name}}</span>
           </div>
         </td>
         <td>
-          <p>$ {{this.price}}</p>
+          <div>$ {{this.price}}</div>
         </td>
-        <td>
-          <div style="display: flex;">
+        <td class="">
+          <div class="d-flex justify-content-center align-items-center">
             <form action="/cartItem/{{this.CartItem.id}}/add" method="POST">
               <button type="submit" class="btn btn-sm btn-outline-secondary">+</button>
             </form>
@@ -50,10 +50,10 @@
         <td></td>
         <td></td>
         <td style="text-align: right;">
-          <h2>Total: </h2>
+          <h2>你的總金額 </h2>
         </td>
         <td>
-          <h2>{{totalPrice}}</h2>
+          <h2>NT${{totalPrice}}</h2>
         </td>
         <td></td>
       </tr>
@@ -61,26 +61,33 @@
   </table>
 </div>
 
-<div class="row mx-auto">
-  <div class="col-md-4">
-    <form action="/order" method="POST">
-      <div class="form-group">
-        <label for="name">Name</label>
-        <input type="text" class="form-control" id="name" placeholder="Enter name" name="name">
+<div class="d-flex flex-column align-items-center mb-5">
+  <h1 class="text-center my-5">請您填寫下列收件人資訊。</h1>
+  <form action="/order" method="POST">
+    <div class="d-flex flex-column px-5">
+      <div class="user-order-info-upper d-flex justify-content-around">
+        <div class="form-group mr-3">
+          <label for="name">姓名</label>
+          <input required type="text" class="form-control" id="name" placeholder="Enter name" name="name">
+        </div>
+        <div class="form-group ml-3">
+          <label for="phone">電話</label>
+          <input required type="text" class="form-control" id="phone" placeholder="Enter phone" name="phone">
+        </div>
       </div>
       <div class="form-group">
-        <label for="phone">Phone</label>
-        <input type="text" class="form-control" id="phone" placeholder="Enter phone" name="phone">
-      </div>
-      <div class="form-group">
-        <label for="address">Address</label>
-        <input type="text" class="form-control" id="address" placeholder="Enter address" name="address">
+        <label for="address">地址</label>
+        <input required type="text" class="form-control" id="address" placeholder="Enter address" name="address">
       </div>
       <input type="hidden" name="cartId" value="{{cart.id}}">
       <input type="hidden" name="amount" value="{{totalPrice}}">
       <input type="hidden" name="shipping_status" value="0">
       <input type="hidden" name="payment_status" value="0">
-      <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
-  </div>
+      <button type="submit" class="btn cart-post-order-btn my-4">Submit</button>
+    </div>
+  </form>
 </div>
+
+{{else}}
+{{> empty}}
+{{/if}}
