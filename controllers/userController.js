@@ -1,4 +1,5 @@
 const bcrypt = require('bcryptjs')
+const passport = require('passport')
 const db = require('../models')
 const User = db.User
 
@@ -63,7 +64,8 @@ const userController = {
   },
 
   loginPage: (req, res) => {
-    res.render('login')
+    if (req.isAuthenticated()) res.redirect('/')
+    else res.render('login')
   },
 
   login: (req, res) => {

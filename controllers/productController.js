@@ -1,23 +1,19 @@
 const db = require('../models')
-// const redis = require('redis')
-// const client = redis.createClient()
-// const { promisify } = require("util")
-// const getAsync = promisify(client.get).bind(client)
-// const setAsync = promisify(client.set).bind(client)
-// const randomkeyAsync = promisify(client.randomkey).bind(client)
-// const keysAsync = promisify(client.keys).bind(client)
-// const mgetAsync = promisify(client.mget).bind(client)
 const asyncRedis = require("async-redis");
 const client = asyncRedis.createClient();
 
 const Product = db.Product
 const Cart = db.Cart
-const PAGE_LIMIT = 10
-const PAGE_OFFSET = 0
+const PAGE_LIMIT = 16
+let PAGE_OFFSET = 0
 
 
 const productController = {
   getProducts: (req, res) => {
+    if (req.query.page) {
+      PAGE_OFFSET = (req.query.page - 1) * PAGE_LIMIT
+    }
+
     Product.findAndCountAll({
       raw: true,
       nest: true,
@@ -25,6 +21,11 @@ const productController = {
       limit: PAGE_LIMIT
     })
       .then(products => {
+        let page = Number(req.query.page) || 1
+        let pages = Math.ceil(products.count / PAGE_LIMIT)
+        let totalPage = Array.from({ length: pages }).map((item, i) => i + 1)
+        let prev = page - 1 < 1 ? 1 : page - 1
+        let next = page + 1 > pages ? pages : page + 1
         return Cart.findByPk(req.session.cartId, { include: 'items' })
           .then(cart => {
             cart = cart ? cart.toJSON() : { items: [] }
@@ -32,7 +33,11 @@ const productController = {
             return res.render('products', {
               products,
               cart,
-              totalPrice
+              totalPrice,
+              page,
+              totalPage,
+              prev,
+              next
             })
           })
       })
