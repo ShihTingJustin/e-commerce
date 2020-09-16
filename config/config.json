@@ -1,5 +1,4 @@
-require('dotenv').config()
-module.exports = {
+{
   "development": {
     "username": "root",
     "password": "password",
@@ -15,10 +14,10 @@ module.exports = {
     "dialect": "mysql"
   },
   "production": {
-    "username": process.env.AWS_USERNAME,
-    "password": process.env.AWS_PW,
-    "database": process.env.AWS_DB,
-    "host": process.env.AWS_HOST,
+    "username": "",
+    "password": "",
+    "database": "",
+    "host": "",
     "dialect": "mysql"
   }
 }
