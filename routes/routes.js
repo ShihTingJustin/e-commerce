@@ -6,18 +6,23 @@ const productController = require('../controllers/productController')
 const cartController = require('../controllers/cartController')
 const orderController = require('../controllers/orderController')
 
+const authenticated = (req, res, next) => {
+  if (req.isAuthenticated()) return next()
+  res.redirect('/login')
+}
 
 router.get('/products', productController.getProducts)
-router.get('/cart', cartController.getCart)
+router.get('/productsR', productController.getProductsR)
+router.get('/cart', authenticated, cartController.getCart)
 router.post('/cart', cartController.postCart)
-router.post('/cartItem/:id/add', cartController.addCartItem)
-router.post('/cartItem/:id/sub', cartController.subCartItem)
-router.delete('/cartItem/:id', cartController.deleteCartItem)
+router.post('/cartItem/:id/add', authenticated, cartController.addCartItem)
+router.post('/cartItem/:id/sub', authenticated, cartController.subCartItem)
+router.delete('/cartItem/:id', authenticated, cartController.deleteCartItem)
 // order
-router.get('/orders', orderController.getOrders)
-router.post('/order', orderController.postOrder)
-router.post('/order/:id/cancel', orderController.cancelOrder)
-router.get('/order/:id/payment', orderController.getPayment)
+router.get('/orders', authenticated, orderController.getOrders)
+router.post('/order', authenticated, orderController.postOrder)
+router.post('/order/:id/cancel', authenticated, orderController.cancelOrder)
+router.get('/order/:id/payment', authenticated, orderController.getPayment)
 router.post('/newebpay/callback', orderController.newebpayCallback)
 
 router.get('/register', userController.registerPage)

@@ -1,4 +1,4 @@
-<h3>準備為訂單編號： {{order.id}} 付款 </h3>
+<h3>準備為訂單編號： {{order.sn}} 付款 </h3>
 <h4>總價 {{order.amount}} </h4>
 
 <form name='Newebpay' action='{{tradeInfo.PayGateWay}}' method="POST">
@@ -10,5 +10,8 @@
     <input type="text" name="TradeSha" value="{{tradeInfo.TradeSha}}"><br>
     Version:
     <input type="text" name="Version" value="{{tradeInfo.Version}}"><br>
-    <button type="submit" class="btn btn-primary">Payment</button>
+    <a href="/order">
+        <button class="btn back-btn px-5 py-3">回上一頁</button>
+    </a>
+    <button type="submit" class="btn payment-btn px-5 py-3">付款</button>
 </form>
