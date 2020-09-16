@@ -5,5 +5,9 @@ module.exports = {
     } else {
       return options.inverse(this);
     }
+  },
+
+  toLocaleString: function (a) {
+    return Number(a).toLocaleString()
   }
 }
