@@ -12,7 +12,7 @@ if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
 const passport = require('./config/passport')
-const redis = require('./config/redis')
+// const redis = require('./config/redis')
 
 
 app.engine('hbs', exphbs({ extname: '.hbs', helpers: require('./config/handlebars-helpers') }))
