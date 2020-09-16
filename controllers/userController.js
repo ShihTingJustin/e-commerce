@@ -14,17 +14,19 @@ const userController = {
     const errors = []
 
     if (!email && !password && !confirmPassword) {
-      errors.push({ message: 'Please fill in Email, password and confirm password.' })
+      errors.push({ message: '請填寫下列欄位。' })
+    } else if (!name) {
+      errors.push({ message: '請填寫名稱。' })
     } else if (!email) {
-      errors.push({ message: 'Please fill in Email.' })
+      errors.push({ message: '請填寫 Email。' })
     } else if (!password) {
-      errors.push({ message: 'Please fill in password.' })
+      errors.push({ message: '請填寫密碼。' })
     } else if (!confirmPassword) {
-      errors.push({ message: 'Please fill in confirm password.' })
+      errors.push({ message: '請填寫確認密碼。' })
     }
 
     if ((password.length && confirmPassword.length) && (password !== confirmPassword)) {
-      errors.push({ message: 'Password or confirm password incorrect.' })
+      errors.push({ message: '密碼或確認密碼填寫錯誤。' })
     }
 
     if (errors.length) {
@@ -40,7 +42,7 @@ const userController = {
     User.findOne({ where: { email } })
       .then(user => {
         if (user) {
-          errors.push({ message: 'This email is registered.' })
+          errors.push({ message: '此 Email 已經被註冊。' })
           return res.render('register', {
             name,
             email,
@@ -54,7 +56,7 @@ const userController = {
           password: bcrypt.hashSync(password, bcrypt.genSaltSync(10), null),
           role: 'user'
         }).then(user => {
-          req.flash('success_msg', 'Register successfully.')
+          req.flash('success_msg', '註冊成功。')
           return res.redirect('/register')
         })
           .catch(err => console.log(err))
@@ -67,12 +69,12 @@ const userController = {
   },
 
   login: (req, res) => {
-    req.flash('success_msg', "Login successfully.")
+    req.flash('success_msg', "登入成功。")
     res.redirect('/')
   },
 
   logout: (req, res) => {
-    req.flash('success_msg', 'Logout successfully')
+    req.flash('success_msg', '登出成功。')
     req.logout()
     res.redirect('/')
   }

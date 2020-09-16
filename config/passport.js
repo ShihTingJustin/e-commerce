@@ -14,8 +14,8 @@ passport.use(new LocalStrategy(
   (req, email, password, done) => {
     User.findOne({ where: { email } })
       .then(user => {
-        if (!user) return done(null, false, req.flash('error_msg', 'This email is not registered.'))
-        if (!bcrypt.compareSync(password, user.password)) return done(null, false, req.flash('error_msg', 'Email or Password incorrect'))
+        if (!user) return done(null, false, req.flash('error_msg', '此 Email 尚未註冊。'))
+        if (!bcrypt.compareSync(password, user.password)) return done(null, false, req.flash('error_msg', 'Email 或密碼填寫錯誤。'))
         return done(null, user)
       })
   }
@@ -23,11 +23,12 @@ passport.use(new LocalStrategy(
 
 passport.use(new FacebookStrategy(
   {
+    passReqToCallback: true,
     clientID: process.env.FACEBOOK_ID,
     clientSecret: process.env.FACEBOOK_SECRET,
     callbackURL: process.env.FACEBOOK_CALLBACK,
     profileFields: ['email', 'displayName']
-  }, (accessToken, refreshToken, profile, done) => {
+  }, (req, accessToken, refreshToken, profile, done) => {
     const { email, name, profile_pic } = profile._json
     User.findOne({ where: { email } })
       .then(user => {
@@ -36,9 +37,10 @@ passport.use(new FacebookStrategy(
         return User.create({
           name,
           email,
-          password: bcrypt.hashSync(randomPassword, bcrypt.genSaltSync(10), null)
+          password: bcrypt.hashSync(randomPassword, bcrypt.genSaltSync(10), null),
+          role: 'user'
         })
-          .then(user => done(null, user))
+          .then(user => done(null, user, req.flash('success_msg', '登入成功。')))
           .catch(err => done(err, false))
       })
   }
