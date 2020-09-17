@@ -40,10 +40,12 @@
       <li>電話號碼： {{this.phone}}</li>
       <li>地址： {{this.address}}</li>
       <li>運送狀況：
+        {{#ifCond this.payment_status '-1'}}訂單已取消{{/ifCond}}
         {{#ifCond this.payment_status '0'}}尚未付款{{/ifCond}}
         {{#ifCond this.payment_status '1'}}正在處理{{/ifCond}}
       </li>
       <li>付款狀況：
+        {{#ifCond this.payment_status '-1'}}訂單已取消{{/ifCond}}
         {{#ifCond this.payment_status '0'}}尚未付款{{/ifCond}}
         {{#ifCond this.payment_status '1'}}付款成功{{/ifCond}}
       </li>
@@ -51,7 +53,7 @@
 
     <div style="display: flex; justify-content: space-around;min-width: 300px;">
       <form action="/order/{{this.id}}/cancel" method="POST">
-        <button type="submit" class="btn order-cancel-btn px-5 py-3">取消訂單</button>
+        <button type="submit" class="btn order-cancel-btn px-5 py-3 {{#ifCond this.payment_status '-1'}}d-none{{/ifCond}}">取消訂單</button>
       </form>
       {{#ifCond this.payment_status '0'}}
       <a href="/order/{{this.id}}/payment">

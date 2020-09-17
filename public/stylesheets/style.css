@@ -169,7 +169,7 @@ input + .label {
   left: 10%;
 }
 
-.login-btn, .fb-login-btn, .keep-looking-btn, .nav-post-order-btn, .cart-post-order-btn, .order-cancel-btn, .payment-btn {
+.login-btn, .fb-login-btn, .keep-looking-btn, .nav-post-order-btn, .cart-post-order-btn, .order-cancel-btn, .payment-btn, .back-btn {
   padding: 10px 0;
   border-radius: 10px;
 }
@@ -192,6 +192,7 @@ input + .label {
 
 .fb-login-btn:hover, .keep-looking-btn:hover, .order-cancel-btn:hover, .back-btn:hover {
   background: rgba(233, 233, 233, 0.63);
+  text-decoration: none;
 }
 /* login page */
 
