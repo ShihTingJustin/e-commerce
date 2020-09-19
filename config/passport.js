@@ -56,25 +56,37 @@ passport.serializeUser((user, done) => {
 })
 
 passport.deserializeUser((req, id, done) => {
+  // update cartItem UserId then User model can access
   CartItem.update({ UserId: id },
-    {
-      where: {
-        cartId: req.session.cartId || 0
-      }
+    {   // use 0 when visitor won't get a cart
+      where: { cartId: req.session.cartId || 0 }
     }
   ).then(() => {
-    User.findByPk(id, {
-      include: [{
-        model: CartItem,
-        where: { UserId: id } || 0,
-        include: [Product]
-      }]
-    }).then(user => {
-      user = user.toJSON()
-      return done(null, user)
+    CartItem.findOne({
+      where: { UserId: id }
+    }).then(cartItem => {
+      // if cartItem exist, get them with user data
+      if (cartItem) {
+        User.findByPk(id, {
+          include: [{
+            model: CartItem,
+            where: { UserId: id },
+            include: [Product]
+          }]
+        }).then(user => {
+          user = user.toJSON()
+          return done(null, user)
+        })
+      } else {
+        // if not, just get user data
+        User.findByPk(id)
+          .then(user => {
+            user = user.toJSON()
+            return done(null, user)
+          })
+      }
     })
   })
-
 
 })
 
