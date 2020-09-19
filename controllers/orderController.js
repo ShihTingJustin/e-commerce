@@ -128,7 +128,7 @@ const orderController = {
           phone,
           shipping_status,
           payment_status,
-          amount: String(Number(amount)),
+          amount: amount.replace(/,/g, ''),
           UserId: req.user.id
         }).then(order => {    // put product in order from cart
           let results = []

@@ -19,4 +19,4 @@ upload/
 
 .env
 
-AWS_deploy.zip
+deploy/
