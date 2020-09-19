@@ -12,7 +12,7 @@ const authenticated = (req, res, next) => {
 }
 
 router.get('/products', productController.getProducts)
-router.get('/productsR', productController.getProductsR)
+// router.get('/productsR', productController.getProductsR)
 router.get('/cart', authenticated, cartController.getCart)
 router.post('/cart', cartController.postCart)
 router.post('/cartItem/:id/add', authenticated, cartController.addCartItem)

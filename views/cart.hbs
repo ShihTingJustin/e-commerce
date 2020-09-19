@@ -1,4 +1,4 @@
-{{#if cart.items}}
+{{#if cartItems}}
 <h1 class="text-center mt-4">{{#if totalPrice}}以下是您購物袋內的商品 NT${{totalPrice}}{{/if}}</h1>
 <div class="mx-auto my-5" style="width: 90%;">
   <table class="table text-center">
@@ -12,33 +12,33 @@
       </tr>
     </thead>
     <tbody>
-      {{#each cart.items}}
+      {{#each cartItems}}
       <tr>
         <td>
           <div>
-            <img src="{{this.image}}" class="card-img" alt="..." style="height: 100px;width: auto;">
-            <span class="ml-3">{{this.name}}</span>
+            <img src="{{this.Product.image}}" class="card-img" alt="..." style="height: 100px;width: auto;">
+            <span class="ml-3">{{this.Product.name}}</span>
           </div>
         </td>
         <td>
-          <div>$ {{this.price}}</div>
+          <div>$ {{this.Product.price}}</div>
         </td>
         <td class="">
           <div class="d-flex justify-content-center align-items-center">
-            <form action="/cartItem/{{this.CartItem.id}}/add" method="POST">
+            <form action="/cartItem/{{this.id}}/add" method="POST">
               <button type="submit" class="btn btn-sm btn-outline-secondary">+</button>
             </form>
             <span style="margin: 0 20px;">
-              {{this.CartItem.quantity}}
+              {{this.quantity}}
             </span>
-            <form action="/cartItem/{{this.CartItem.id}}/sub" method="POST">
+            <form action="/cartItem/{{this.id}}/sub" method="POST">
               <button type="submit" class="btn btn-sm btn-outline-secondary">-</button>
             </form>
           </div>
         </td>
-        <td>{{this.price}} * {{this.CartItem.quantity}}</td>
+        <td>{{this.Product.price}} * {{this.quantity}}</td>
         <td>
-          <form action="/cartItem/{{this.CartItem.id}}?_method=DELETE" method="POST">
+          <form action="/cartItem/{{this.id}}?_method=DELETE" method="POST">
             <button type="submit" class="btn btn-link">
               <i class="fas fa-trash"></i>
             </button>
