@@ -12,7 +12,7 @@ if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
 const passport = require('./config/passport')
-const redis = require('./config/redis')
+// const redis = require('./config/redis')
 
 
 app.engine('hbs', exphbs({ extname: '.hbs', helpers: require('./config/handlebars-helpers') }))
@@ -25,9 +25,10 @@ app.use(session({
   secret: process.env.SESSION_SECRET,
   name: 'ec',
   resave: false,
-  saveUninitialized: false,
+  saveUninitialized: true,
   cookie: {
-    maxAge: 60 * 60 * 1000  //ms
+    sameSite: false,
+    //maxAge: 60 * 60 * 1000  //ms
   }
 }))
 

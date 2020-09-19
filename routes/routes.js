@@ -11,14 +11,13 @@ const authenticated = (req, res, next) => {
   res.redirect('/login')
 }
 
-
 router.get('/products', productController.getProducts)
-router.get('/productsR', productController.getProductsR)
-router.get('/cart', cartController.getCart)
+// router.get('/productsR', productController.getProductsR)
+router.get('/cart', authenticated, cartController.getCart)
 router.post('/cart', cartController.postCart)
-router.post('/cartItem/:id/add', cartController.addCartItem)
-router.post('/cartItem/:id/sub', cartController.subCartItem)
-router.delete('/cartItem/:id', cartController.deleteCartItem)
+router.post('/cartItem/:id/add', authenticated, cartController.addCartItem)
+router.post('/cartItem/:id/sub', authenticated, cartController.subCartItem)
+router.delete('/cartItem/:id', authenticated, cartController.deleteCartItem)
 // order
 router.get('/orders', authenticated, orderController.getOrders)
 router.post('/order', authenticated, orderController.postOrder)

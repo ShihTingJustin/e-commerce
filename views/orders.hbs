@@ -1,7 +1,9 @@
+{{#if orders}}
+<h1 class="text-center mt-4">以下是您的訂單內容</h1>
 {{#each orders}}
-<div class="row">
-  <div class="col-md-5">
-    <table class="table">
+<div class="d-flex flex-column align-items-center my-5">
+  <div class="col-10">
+    <table class="table text-center">
       <thead>
         <tr>
           <th scope="col">Product</th>
@@ -12,7 +14,8 @@
       <tbody>
         {{#each this.items}}
         <tr>
-          <td>{{this.dataValues.name}}</td>
+          <td><img src="{{this.dataValues.image}}" class="card-img mr-4" alt="..."
+              style="height: 100px;width: auto;">{{this.dataValues.name}}</td>
           <td>{{this.dataValues.OrderItem.dataValues.quantity}}</td>
           <td>{{this.dataValues.price}}</td>
         </tr>
@@ -20,35 +23,50 @@
         <tr>
           <td></td>
           <td style="text-align: right;">
-            <h4>Total: </h4>
+            <h4>總金額 </h4>
           </td>
           <td>
-            <h4>{{this.amount}}</h4>
+            <h4>NT${{#toLocaleString this.amount}}{{/toLocaleString}}</h4>
           </td>
         </tr>
       </tbody>
     </table>
   </div>
 
-  <div>
+  <div class="col-10">
     <ul>
-      <li>{{this.id}}</li>
-      <li>name: {{this.name}}</li>
-      <li>address: {{this.address}}</li>
-      <li>phone: {{this.phone}}</li>
-      <li>shipping_status: {{this.shipping_status}}</li>
-      <li>payment_status: {{this.payment_status}}</li>
+      {{#ifCond this.payment_status '1'}}<li>訂單編號： {{this.sn}}</li>{{/ifCond}}
+      <li>姓名： {{this.name}}</li>
+      <li>電話號碼： {{this.phone}}</li>
+      <li>地址： {{this.address}}</li>
+      <li>運送狀況：
+        {{#ifCond this.payment_status '-1'}}訂單已取消{{/ifCond}}
+        {{#ifCond this.payment_status '0'}}尚未付款{{/ifCond}}
+        {{#ifCond this.payment_status '1'}}正在處理{{/ifCond}}
+      </li>
+      <li>付款狀況：
+        {{#ifCond this.payment_status '-1'}}訂單已取消{{/ifCond}}
+        {{#ifCond this.payment_status '0'}}尚未付款{{/ifCond}}
+        {{#ifCond this.payment_status '1'}}付款成功{{/ifCond}}
+      </li>
     </ul>
 
     <div style="display: flex; justify-content: space-around;min-width: 300px;">
       <form action="/order/{{this.id}}/cancel" method="POST">
-        <button type="submit" class="btn btn-primary">取消訂單</button>
+        <button type="submit" class="btn order-cancel-btn px-5 py-3 {{#ifCond this.payment_status '-1'}}d-none{{/ifCond}}">取消訂單</button>
       </form>
-
-      <a href="/order/{{this.id}}/payment"><button class="btn btn-primary">立即付款</button></a>
+      {{#ifCond this.payment_status '0'}}
+      <a href="/order/{{this.id}}/payment">
+        <button class="btn payment-btn px-5 py-3">繼續前往付款</button>
+      </a>
+      {{/ifCond}}
     </div>
   </div>
 
 </div>
 <hr />
 {{/each}}
+
+{{else}}
+{{> empty}}
+{{/if}}
