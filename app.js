@@ -25,10 +25,10 @@ app.use(session({
   secret: process.env.SESSION_SECRET,
   name: 'ec',
   resave: false,
-  saveUninitialized: false,
+  saveUninitialized: true,
   cookie: {
     sameSite: false,
-    maxAge: 60 * 60 * 1000  //ms
+    //maxAge: 60 * 60 * 1000  //ms
   }
 }))
 

@@ -3,7 +3,7 @@ const LocalStrategy = require('passport-local').Strategy
 const FacebookStrategy = require('passport-facebook').Strategy
 const bcrypt = require('bcryptjs')
 const db = require('../models')
-const User = db.User
+const { User, Cart, CartItem, Product } = db
 
 passport.use(new LocalStrategy(
   {
@@ -12,12 +12,17 @@ passport.use(new LocalStrategy(
     passReqToCallback: true
   },
   (req, email, password, done) => {
-    User.findOne({ where: { email } })
-      .then(user => {
-        if (!user) return done(null, false, req.flash('error_msg', '此 Email 尚未註冊。'))
-        if (!bcrypt.compareSync(password, user.password)) return done(null, false, req.flash('error_msg', 'Email 或密碼填寫錯誤。'))
-        return done(null, user)
-      })
+    User.findOne({
+      where: { email }
+    }).then(user => {
+      if (!user) return done(null, false, req.flash('error_msg', '此 Email 尚未註冊。'))
+      if (!bcrypt.compareSync(password, user.password)) return done(null, false, req.flash('error_msg', 'Email 或密碼填寫錯誤。'))
+      return done(null, user)
+    })
+    // .then(() => {
+    //   cartController.postCart
+    //   console.log(11111111)
+    // })
   }
 ))
 
@@ -50,12 +55,27 @@ passport.serializeUser((user, done) => {
   done(null, user.id)
 })
 
-passport.deserializeUser((id, done) => {
-  User.findByPk(id)
-    .then(user => {
+passport.deserializeUser((req, id, done) => {
+  CartItem.update({ UserId: id },
+    {
+      where: {
+        cartId: req.session.cartId || 0
+      }
+    }
+  ).then(() => {
+    User.findByPk(id, {
+      include: [{
+        model: CartItem,
+        where: { UserId: id } || 0,
+        include: [Product]
+      }]
+    }).then(user => {
       user = user.toJSON()
       return done(null, user)
     })
+  })
+
+
 })
 
 module.exports = passport
