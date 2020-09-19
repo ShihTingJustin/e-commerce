@@ -105,7 +105,7 @@ function getTradeInfo(Amt, Desc, email) {
 const orderController = {
   getOrders: (req, res) => {
     Order.findAll({
-      where: { UserId: req.user.id},
+      where: { UserId: req.user.id },
       include: [{
         model: Product, as: "items"
       }]
@@ -119,54 +119,58 @@ const orderController = {
 
   postOrder: (req, res) => {
     // create order
-    Cart.findByPk(req.body.cartId, { include: 'items' })
-      .then(cart => {
-        const { name, address, phone, shipping_status, payment_status, amount } = req.body
-        return Order.create({
-          name,
-          address,
-          phone,
-          shipping_status,
-          payment_status,
-          amount: amount.replace(/,/g, ''),
-          UserId: req.user.id
-        }).then(order => {    // put product in order from cart
-          let results = []
-          for (let i = 0; i < cart.items.length; i++) {
-            results.push(
-              OrderItem.create({
-                OrderId: order.id,
-                ProductId: cart.items[i].id,
-                price: cart.items[i].price,
-                quantity: cart.items[i].CartItem.quantity
-              })
-            )
-          }
-          // clear cart after order finish
-          Promise.all(results).then(() => {
-            return CartItem.destroy({
-              where: { cartId: req.body.cartId }
+    CartItem.findAll({
+      raw: true,
+      nest: true,
+      where: { UserId: req.user.id },
+      include: [Product]
+    }).then(cartItems => {
+      const { name, address, phone, shipping_status, payment_status, amount } = req.body
+      return Order.create({
+        name,
+        address,
+        phone,
+        shipping_status,
+        payment_status,
+        amount: amount.replace(/,/g, ''),
+        UserId: req.user.id
+      }).then(order => {    // put product in order from cart
+        let results = []
+        for (let i = 0; i < cartItems.length; i++) {
+          results.push(
+            OrderItem.create({
+              OrderId: order.id,
+              ProductId: cartItems[i].ProductId,
+              price: cartItems[i].Product.price,
+              quantity: cartItems[i].quantity
             })
-          }).then(() => { return res.redirect('/orders') })
-            .then(() => {
-              // send order confirmation email
-              let mailOptions = {
-                from: process.env.GMAIL_ACCOUNT,
-                to: process.env.GMAIL_ACCOUNT,
-                subject: `${order.id} 訂單成立`,
-                text: `${order.id} 訂單成立`
-              }
+          )
+        }
+        // clear cart after order finish
+        Promise.all(results).then(() => {
+          return CartItem.destroy({
+            where: { UserId: req.user.id }
+          })
+        }).then(() => { return res.redirect('/orders') })
+          .then(() => {
+            // send order confirmation email
+            let mailOptions = {
+              from: process.env.GMAIL_ACCOUNT,
+              to: process.env.GMAIL_ACCOUNT,
+              subject: `${order.id} 訂單成立`,
+              text: `${order.id} 訂單成立`
+            }
 
-              return transporter.sendMail(mailOptions, (err, info) => {
-                if (err) {
-                  console.log(err)
-                } else {
-                  console.log('Email sent: ' + info.response)
-                }
-              })
+            return transporter.sendMail(mailOptions, (err, info) => {
+              if (err) {
+                console.log(err)
+              } else {
+                console.log('Email sent: ' + info.response)
+              }
             })
-        })
+          })
       })
+    })
   },
 
   cancelOrder: (req, res) => {
