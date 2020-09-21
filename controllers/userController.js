@@ -57,7 +57,7 @@ const userController = {
           role: 'user'
         }).then(user => {
           req.flash('success_msg', '註冊成功。')
-          return res.redirect('/register')
+          return res.redirect('/')
         })
           .catch(err => console.log(err))
       })

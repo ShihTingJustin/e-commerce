@@ -1,18 +1,8 @@
 require('dotenv').config()
-const nodemailer = require('nodemailer')
-
 const db = require('../models')
 const { CartItem, Order, OrderItem, Product } = db
-const payment = require('../services/newebpay')
-
-// order notification email
-const transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    user: process.env.GMAIL_ACCOUNT,
-    pass: process.env.GMAIL_PW
-  }
-})
+const payService = require('../services/newebpay')
+const mailService = require('../services/mail')
 
 const orderController = {
   getOrders: (req, res) => {
@@ -72,13 +62,9 @@ const orderController = {
               subject: `${order.id} 訂單成立`,
               text: `${order.id} 訂單成立`
             }
-
-            return transporter.sendMail(mailOptions, (err, info) => {
-              if (err) {
-                console.log(err)
-              } else {
-                console.log('Email sent: ' + info.response)
-              }
+            return mailService.sendMail(mailOptions, (err, info) => {
+              if (err) console.log(err)
+              else console.log('Email sent: ' + info.response)
             })
           })
       })
@@ -105,7 +91,7 @@ const orderController = {
 
     return Order.findByPk(req.params.id)
       .then(order => {
-        const tradeInfo = payment.getTradeInfo(order.amount, '商品名稱', 'justinhuang777@gmail.com')
+        const tradeInfo = payService.getTradeInfo(order.amount, '商品名稱', 'justinhuang777@gmail.com')
         order.update({
           ...req.body,
           sn: tradeInfo.MerchantOrderNo
@@ -127,7 +113,7 @@ const orderController = {
     console.log(req.body.TradeInfo)
 
 
-    const data = JSON.parse(payment.create_mpg_aes_decrypt(req.body.TradeInfo))
+    const data = JSON.parse(payService.create_mpg_aes_decrypt(req.body.TradeInfo))
 
     console.log('===== newebpayCallback: create_mpg_aes_decrypt、data =====')
     console.log(data)
