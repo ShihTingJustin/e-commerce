@@ -8,6 +8,7 @@ const orderController = require('../controllers/orderController')
 
 const authenticated = (req, res, next) => {
   if (req.isAuthenticated()) return next()
+  req.session.redirectTo = req.originalUrl
   res.redirect('/login')
 }
 
@@ -31,7 +32,8 @@ router.get('/login', userController.loginPage)
 router.post('/login', passport.authenticate('local', {
   failureRedirect: '/login',
   failureFlash: true
-}),userController.login)
+}), userController.login)
+
 router.get('/logout', userController.logout)
 
 router.get('/auth/facebook', passport.authenticate('facebook', {
@@ -43,6 +45,5 @@ router.get('/auth/facebook/callback', passport.authenticate('facebook', {
 }))
 
 router.get('/', (req, res) => res.render('index'))
-
 
 module.exports = router

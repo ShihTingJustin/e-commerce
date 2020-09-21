@@ -11,7 +11,6 @@ const cartController = {
       where: { UserId: req.user.id },
       include: [Product]
     }).then(cartItems => {
-      console.log(cartItems)
       let totalPrice = cartItems.length > 0 ? cartItems.map(item => item.Product.price * item.quantity).reduce((a, b) => a + b) : 0
       return res.render('cart', {
         cartItems,
@@ -19,17 +18,6 @@ const cartController = {
         cartEmptyPage: 1
       })
     })
-    // getCart: (req, res) => {
-    //   Cart.findByPk(req.session.cartId, { include: 'items' })
-    //     .then(cart => {
-    //       cart = cart ? cart.toJSON() : { items: [] }
-    //       let totalPrice = cart.items.length > 0 ? cart.items.map(d => d.price * d.CartItem.quantity).reduce((a, b) => a + b) : 0
-    //       return res.render('cart', {
-    //         cart,
-    //         totalPrice: Number(totalPrice).toLocaleString(),
-    //         cartEmptyPage: 1
-    //       })
-    //     })
   },
 
   postCart: (req, res) => {
@@ -53,16 +41,12 @@ const cartController = {
         }).then(cartItem => {
           req.session.cartId = cart.id
           return cartItem.save()
-        })
-          .then(cartItem => {
-            if (req.user) {
-              req.session.cartId = req.user.id
-              return req.session.save(() => {
-                return res.redirect('back')
-              })
-            }
-            return res.redirect('back')
-          })
+        }).then(cartItem => {
+          if (req.user) {
+            req.session.cartId = req.user.id
+            return req.session.save()
+          }
+        }).then(() => res.redirect('back'))
       })
     })
   },
