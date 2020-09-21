@@ -69,8 +69,9 @@ const userController = {
   },
 
   login: (req, res) => {
+    let redirectTo = req.session.redirectTo || '/'
     req.flash('success_msg', "登入成功。")
-    res.redirect('/')
+    res.redirect(redirectTo)
   },
 
   logout: (req, res) => {
