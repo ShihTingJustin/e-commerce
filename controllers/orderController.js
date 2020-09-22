@@ -91,7 +91,7 @@ const orderController = {
 
     return Order.findByPk(req.params.id)
       .then(order => {
-        const tradeInfo = payService.getTradeInfo(order.amount, '商品名稱', 'justinhuang777@gmail.com')
+        const tradeInfo = payService.getTradeInfo(order.amount, '商品名稱', 'justinhuang777@hotmail.com')
         order.update({
           ...req.body,
           sn: tradeInfo.MerchantOrderNo
@@ -126,7 +126,16 @@ const orderController = {
         return res.redirect('/orders')
       })
     })
+  },
 
+  testPay: (req, res) => {
+    return Order.findAll({ where: { sn: req.body.sn } }).then(orders => {
+      orders[0].update({
+        payment_status: 1,
+      }).then(() => {
+        return res.redirect('/orders')
+      })
+    })
   }
 
 }

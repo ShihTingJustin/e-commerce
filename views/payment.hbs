@@ -1,12 +1,19 @@
 <div class="d-flex flex-column align-items-center justify-content-center mt-5">
     <div>
         <h3 class="text-center">準備為訂單編號： {{order.sn}} 付款 </h3>
-        <h4 class="text-right mt-3">總金額 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NT${{#toLocaleString order.amount}}{{/toLocaleString}} </h4>
+        <h4 class="text-right mt-3">總金額
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NT${{#toLocaleString order.amount}}{{/toLocaleString}} </h4>
     </div>
     <div class="d-flex align-items-start mt-5">
         <a href="/orders">
             <div class="btn back-btn px-5 py-3">回上一頁</div>
         </a>
+        {{#ifCond req.user.role test}}
+        <form action="/testPay" method="POST">
+            <button type="submit" class="btn payment-btn ml-3 px-5 py-3">TEST PAY</button>
+            <input type="hidden" name="sn" value="{{order.sn}}"><br>
+        </form>
+        {{/ifCond}}
         <form name='Newebpay' action='{{tradeInfo.PayGateWay}}' method="POST">
             <button type="submit" class="btn payment-btn ml-3 px-5 py-3">付款</button>
             <input type="hidden" name="MerchantID" value="{{tradeInfo.MerchantID}}"><br>
