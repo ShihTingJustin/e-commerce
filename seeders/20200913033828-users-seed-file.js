@@ -15,7 +15,7 @@ module.exports = {
     }], {});
 
     // modify seed data arguments here
-    const userCounts = 3        // 3 users
+    const userCounts = 100        // users quantity
 
     return queryInterface.bulkInsert('Users',
       Array.from({ length: userCounts }, (_, i) =>
@@ -23,7 +23,7 @@ module.exports = {
           name: faker.name.findName(),
           email: `user${i}@example.com`,
           password: bcrypt.hashSync('123', bcrypt.genSaltSync(10), null),
-          role: 'user',
+          role: 'test',
           createdAt: new Date(),
           updatedAt: new Date()
         })

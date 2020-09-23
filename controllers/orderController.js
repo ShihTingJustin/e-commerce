@@ -58,7 +58,7 @@ const orderController = {
             // send order confirmation email
             let mailOptions = {
               from: process.env.GMAIL_ACCOUNT,
-              to: process.env.GMAIL_ACCOUNT,
+              to: process.env.HOTMAIL_ACCOUNT,
               subject: `${order.id} 訂單成立`,
               text: `${order.id} 訂單成立`
             }
@@ -85,13 +85,12 @@ const orderController = {
   },
 
   getPayment: (req, res) => {
-    console.log('===== getPayment =====')
-    console.log(req.params.id)
-    console.log('==========')
-
+    // console.log('===== getPayment =====')
+    // console.log(req.params.id)
+    // console.log('==========')
     return Order.findByPk(req.params.id)
       .then(order => {
-        const tradeInfo = payService.getTradeInfo(order.amount, '商品名稱', 'justinhuang777@hotmail.com')
+        const tradeInfo = payService.getTradeInfo(req.user.id, order.amount, '商品名稱', process.env.GMAIL_ACCOUNT)
         order.update({
           ...req.body,
           sn: tradeInfo.MerchantOrderNo
@@ -127,15 +126,51 @@ const orderController = {
       })
     })
   },
-
-  testPay: (req, res) => {
-    return Order.findAll({ where: { sn: req.body.sn } }).then(orders => {
-      orders[0].update({
-        payment_status: 1,
-      }).then(() => {
-        return res.redirect('/orders')
+  // FOR LOAD TESTING
+  testPay: async (req, res) => {
+    try {
+      console.log(req.body)
+      const order = await Order.findOne({
+        // req.user.id FOR LOAD TESTING
+        where: { sn: req.body.sn || req.user.id },
+        include: [
+          { model: Product, as: 'items' }
+        ]
       })
-    })
+      // OrderItem ProductID    
+      let idData = await order.toJSON().items.map(item => item.id)
+
+      // save ProductID and  OrderItem quantity
+      let quantityMap = {}
+      order.toJSON().items.forEach(item => {
+        quantityMap[item.id] = item.OrderItem.quantity
+      })
+
+      const products = await Product.findAll({
+        where: { id: idData }
+      })
+
+      for (let i = 0; i < idData.length; i++) {
+
+        const stock = products[i].dataValues.stock
+        const quantity = quantityMap[products[i].id]
+
+        // complete payment if stock available
+        if (stock - quantity > 0) {
+          await products[i].update({ stock: stock - quantity })
+          await order.update({ payment_status: 1 })
+          // clear temp data after update
+          idData = null
+          quantityMap = {}
+          return res.redirect('/orders')
+        } else {
+          // TODO: remove OrderItem if stock unavailable
+          return res.redirect('/orders')
+        }
+      }
+    } catch (err) {
+      console.log(err)
+    }
   }
 
 }

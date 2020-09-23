@@ -1,4 +1,8 @@
 const crypto = require("crypto")
+const moment = require('moment')
+
+//console.log(sn)
+//console.log(Date.now())
 
 const URL = process.env.URL
 const MerchantID = process.env.MERCHANT_ID
@@ -10,7 +14,7 @@ const NotifyURL = URL + "/newebpay/callback?from=NotifyURL"
 const ClientBackURL = URL + "/orders"
 
 module.exports = {
-  getTradeInfo: (Amt, Desc, email) => {
+  getTradeInfo: (userId, Amt, Desc, email) => {
     let getDataChain = function (TradeInfo) {
       let results = []
       for (let kv of Object.entries(TradeInfo)) {
@@ -31,16 +35,23 @@ module.exports = {
       return sha.update(plaintext).digest('hex').toUpperCase()
     }
 
-    console.log('===== getTradeInfo =====')
-    console.log(Amt, Desc, email)
-    console.log('==========')
+    // console.log('===== getTradeInfo =====')
+    // console.log(Amt, Desc, email)
+    // console.log('==========')
+
+    // FOR LOAD TESTING
+    const sn = userId 
+    
+    //FOR PRODUCTION 
+    // const date = new Date()
+    // sn = moment(date).format('YYYYMMDDHHMMSS') + userId
 
     data = {
       'MerchantID': MerchantID, // 商店代號
       'RespondType': 'JSON', // 回傳格式
       'TimeStamp': Date.now(), // 時間戳記
       'Version': 1.5, // 串接程式版本
-      'MerchantOrderNo': Date.now(), // 商店訂單編號
+      'MerchantOrderNo': sn, // 商店訂單編號
       'LoginType': 0, // 藍新會員
       'OrderComment': 'OrderComment', // 商店備註
       'Amt': Amt, // 訂單金額
@@ -51,15 +62,15 @@ module.exports = {
       'ClientBackURL': ClientBackURL // 支付取消返回商店網址
     }
 
-    console.log('===== getTradeInfo: data =====')
-    console.log(data)
+    // console.log('===== getTradeInfo: data =====')
+    // console.log(data)
 
     mpg_aes_encrypt = create_mpg_aes_encrypt(data)
     mpg_sha_encrypt = create_mpg_sha_encrypt(mpg_aes_encrypt)
 
-    console.log('===== getTradeInfo: mpg_aes_encrypt, mpg_sha_encrypt =====')
-    console.log(mpg_aes_encrypt)
-    console.log(mpg_sha_encrypt)
+    // console.log('===== getTradeInfo: mpg_aes_encrypt, mpg_sha_encrypt =====')
+    // console.log(mpg_aes_encrypt)
+    // console.log(mpg_sha_encrypt)
 
     tradeInfo = {
       'MerchantID': MerchantID, // 商店代號
@@ -70,8 +81,8 @@ module.exports = {
       'MerchantOrderNo': data.MerchantOrderNo
     }
 
-    console.log('===== getTradeInfo: tradeInfo =====')
-    console.log(tradeInfo)
+    // console.log('===== getTradeInfo: tradeInfo =====')
+    // console.log(tradeInfo)
 
     return tradeInfo
   },

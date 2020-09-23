@@ -11,7 +11,7 @@
         {{#ifCond req.user.role test}}
         <form action="/testPay" method="POST">
             <button type="submit" class="btn payment-btn ml-3 px-5 py-3">TEST PAY</button>
-            <input type="hidden" name="sn" value="{{order.sn}}"><br>
+            <input type="hidden" name="sn" value="{{tradeInfo.MerchantOrderNo}}"><br>
         </form>
         {{/ifCond}}
         <form name='Newebpay' action='{{tradeInfo.PayGateWay}}' method="POST">

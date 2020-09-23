@@ -12,6 +12,7 @@ module.exports = {
           description: faker.commerce.product() + '/' + faker.commerce.productName(),
           price: Math.floor(Math.random() * i * 5000) + 1,
           image: `https://source.unsplash.com/640x480/?apple,iphone${i}`,
+          stock: 20,
           createdAt: new Date(),
           updatedAt: new Date(),
         })
@@ -25,6 +26,7 @@ module.exports = {
           description: faker.commerce.product() + '/' + faker.commerce.productName(),
           price: Math.floor(Math.random() * i * 4000) + 1,
           image: `https://source.unsplash.com/640x480/?apple,ipad${i}`,
+          stock: 20,
           createdAt: new Date(),
           updatedAt: new Date(),
         })
@@ -38,6 +40,7 @@ module.exports = {
           description: faker.commerce.product() + '/' + faker.commerce.productName(),
           price: Math.floor(Math.random() * i * 7000) + 1,
           image: `https://source.unsplash.com/640x480/?apple,macbookpro${i}`,
+          stock: 20,
           createdAt: new Date(),
           updatedAt: new Date(),
         })
