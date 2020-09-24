@@ -8,7 +8,7 @@ const URL = process.env.URL
 const MerchantID = process.env.MERCHANT_ID
 const HashKey = process.env.HASH_KEY
 const HashIV = process.env.HASH_IV
-const PayGateWay = "https://ccore.spgateway.com/MPG/mpg_gateway"
+const PayGateWay = "https://ccore.newebpay.com/MPG/mpg_gateway"
 const ReturnURL = URL + "/newebpay/callback?from=ReturnURL"
 const NotifyURL = URL + "/newebpay/callback?from=NotifyURL"
 const ClientBackURL = URL + "/orders"
@@ -40,11 +40,11 @@ module.exports = {
     // console.log('==========')
 
     // FOR LOAD TESTING
-    const sn = userId 
-    
+    //const sn = userId 
+
     //FOR PRODUCTION 
-    // const date = new Date()
-    // sn = moment(date).format('YYYYMMDDHHMMSS') + userId
+    const date = new Date()
+    const sn = moment(date).format('YYYYMMDDHHMMSS') + userId
 
     data = {
       'MerchantID': MerchantID, // 商店代號

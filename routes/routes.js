@@ -5,6 +5,7 @@ const userController = require('../controllers/userController')
 const productController = require('../controllers/productController')
 const cartController = require('../controllers/cartController')
 const orderController = require('../controllers/orderController')
+const testController = require('../controllers/testController')
 
 const authenticated = (req, res, next) => {
   if (req.isAuthenticated()) return next()
@@ -25,7 +26,9 @@ router.post('/order', authenticated, orderController.postOrder)
 router.post('/order/:id/cancel', authenticated, orderController.cancelOrder)
 router.get('/order/:id/payment', authenticated, orderController.getPayment)
 router.post('/newebpay/callback', authenticated, orderController.newebpayCallback)
-router.post('/testpay', authenticated, orderController.testPay)
+router.post('/testpay', authenticated, testController.testPay)
+router.get('/testGetOrder', authenticated, testController.testGetOrder)
+router.get('/testGetSN', authenticated, testController.testGetSN)
 
 router.get('/register', userController.registerPage)
 router.post('/register', userController.register)

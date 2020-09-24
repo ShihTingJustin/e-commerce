@@ -1,8 +1,10 @@
 require('dotenv').config()
 const db = require('../models')
 const { CartItem, Order, OrderItem, Product } = db
+const sequelize = require('sequelize')
 const payService = require('../services/newebpay')
 const mailService = require('../services/mail')
+const { Sequelize } = require('sequelize')
 
 const orderController = {
   getOrders: (req, res) => {
@@ -54,19 +56,6 @@ const orderController = {
             where: { UserId: req.user.id }
           })
         }).then(() => { return res.redirect('/orders') })
-          .then(() => {
-            // send order confirmation email
-            let mailOptions = {
-              from: process.env.GMAIL_ACCOUNT,
-              to: process.env.HOTMAIL_ACCOUNT,
-              subject: `${order.id} 訂單成立`,
-              text: `${order.id} 訂單成立`
-            }
-            return mailService.sendMail(mailOptions, (err, info) => {
-              if (err) console.log(err)
-              else console.log('Email sent: ' + info.response)
-            })
-          })
       })
     })
   },
@@ -123,54 +112,20 @@ const orderController = {
         payment_status: 1,
       }).then(() => {
         return res.redirect('/orders')
+      }).then(() => {
+        // send payment confirmation email
+        let mailOptions = {
+          from: process.env.GMAIL_ACCOUNT,
+          to: process.env.HOTMAIL_ACCOUNT,
+          subject: `訂單編號：${data['Result']['MerchantOrderNo']} 付款成功`,
+          text: `訂單編號：${data['Result']['MerchantOrderNo']} 付款成功`
+        }
+        return mailService.sendMail(mailOptions, (err, info) => {
+          if (err) console.log(err)
+          else console.log('Email sent: ' + info.response)
+        })
       })
     })
-  },
-  // FOR LOAD TESTING
-  testPay: async (req, res) => {
-    try {
-      console.log(req.body)
-      const order = await Order.findOne({
-        // req.user.id FOR LOAD TESTING
-        where: { sn: req.body.sn || req.user.id },
-        include: [
-          { model: Product, as: 'items' }
-        ]
-      })
-      // OrderItem ProductID    
-      let idData = await order.toJSON().items.map(item => item.id)
-
-      // save ProductID and  OrderItem quantity
-      let quantityMap = {}
-      order.toJSON().items.forEach(item => {
-        quantityMap[item.id] = item.OrderItem.quantity
-      })
-
-      const products = await Product.findAll({
-        where: { id: idData }
-      })
-
-      for (let i = 0; i < idData.length; i++) {
-
-        const stock = products[i].dataValues.stock
-        const quantity = quantityMap[products[i].id]
-
-        // complete payment if stock available
-        if (stock - quantity > 0) {
-          await products[i].update({ stock: stock - quantity })
-          await order.update({ payment_status: 1 })
-          // clear temp data after update
-          idData = null
-          quantityMap = {}
-          return res.redirect('/orders')
-        } else {
-          // TODO: remove OrderItem if stock unavailable
-          return res.redirect('/orders')
-        }
-      }
-    } catch (err) {
-      console.log(err)
-    }
   }
 
 }
