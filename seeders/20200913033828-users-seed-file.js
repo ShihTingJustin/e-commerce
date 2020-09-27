@@ -15,7 +15,7 @@ module.exports = {
     }], {});
 
     // modify seed data arguments here
-    const userCounts = 100        // users quantity
+    const userCounts = 150        // users quantity
 
     return queryInterface.bulkInsert('Users',
       Array.from({ length: userCounts }, (_, i) =>

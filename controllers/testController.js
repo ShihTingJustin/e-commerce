@@ -25,6 +25,7 @@ const testController = {
   },
 
   testPay: async (req, res) => {
+    // TODO 29 30 要包進去 try
     const sequelize = db.sequelize
     const t1 = await sequelize.transaction({
       isolationLevel: 'SERIALIZABLE'
