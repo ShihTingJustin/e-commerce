@@ -25,6 +25,12 @@ module.exports = {
     "password": process.env.AWS_PW,
     "database": process.env.AWS_DB,
     "host": process.env.AWS_HOST,
-    "dialect": "mysql"
+    "dialect": "mysql",
+    pool: {
+      max: 100,
+      min: 0,
+      acquire: 30000,
+      idle: 10000
+    }
   }
 }

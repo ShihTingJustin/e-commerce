@@ -6,7 +6,7 @@ const session = require('express-session')
 const methodOverride = require('method-override')
 
 const app = express()
-const PORT = process.env.PORT || 3001
+const PORT = process.env.PORT || 4000
 
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
