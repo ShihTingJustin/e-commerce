@@ -22,9 +22,7 @@
         </g>
       </svg>
     </button>
-    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink"
-      style="width: 280px; border-radius: 20px">
-
+    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink" style="width: 280px;">
       {{#if user}}
       <div class="list-group-item border-0">
         {{#if user.CartItems}}
@@ -47,33 +45,12 @@
         <small class="d-flex justify-content-center">購物袋中沒有任何商品。</small>
         {{/if}}
       </div>
-      {{else}}
-      <div class="list-group-item border-0">
-        {{#if cart.items}}
-        {{#each cart.items}}
-        <div class="row mx-auto">
-          <div class="col-4 d-flex align-items-center">
-            <img src="{{this.image}}" class="card-img" alt="">
-          </div>
-          <div class="col-8 d-flex align-items-center">
-            <div class="card-body">
-              <h5 class="card-title" style="font-size: 14px;">{{this.name}}</h5>
-            </div>
-          </div>
-        </div>
-        {{/each}}
-        <a class="dropdown-item mt-3" href="/cart">
-          <button class="btn nav-post-order-btn w-100">結帳</button>
-        </a>
-        {{else}}
-        <small class="d-flex justify-content-center">購物袋中沒有任何商品。</small>
-        {{/if}}
-      </div>
+      <div class="dropdown-divider"></div>
       {{/if}}
 
 
 
-      <div class="dropdown-divider"></div>
+      
 
       <a class="dropdown-item d-flex justify-content-center align-items-center" href="/cart">
         <img src="https://i.imgur.com/ZlFAWRi.png" alt="">
@@ -90,8 +67,7 @@
       <div class="dropdown-divider"></div>
 
       {{#if user}}
-      <a class="dropdown-item d-flex flex-column align-items-center justify-content-center" style="border-radius: 20px;"
-        href="/logout">
+      <a class="dropdown-item d-flex flex-column align-items-center justify-content-center" href="/logout">
         <div class="d-flex align-items-center">
           <img src="https://i.imgur.com/Hxg8bfx.png" alt="">
           <div class="nav-cart-item">登出</div>
@@ -99,8 +75,7 @@
         <small class="nav-cart-item">{{ user.email }}</small>
       </a>
       {{else}}
-      <a class="dropdown-item d-flex justify-content-center align-items-center" style="border-radius: 20px;"
-        href="/login">
+      <a class="dropdown-item d-flex justify-content-center align-items-center" href="/login">
         <img src="https://i.imgur.com/Hxg8bfx.png" alt="">
         <div class="nav-cart-item">登入</div>
 

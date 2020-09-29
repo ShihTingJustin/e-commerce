@@ -1,13 +1,12 @@
 require('dotenv').config()
 const db = require('../models')
 const { CartItem, Order, OrderItem, Product } = db
-const sequelize = require('sequelize')
 const payService = require('../services/newebpay')
 const mailService = require('../services/mail')
-const { Sequelize } = require('sequelize')
 
 const orderController = {
   getOrders: (req, res) => {
+    console.log(req.user)
     Order.findAll({
       where: { UserId: req.user.id },
       include: [{

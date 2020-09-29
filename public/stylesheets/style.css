@@ -26,6 +26,10 @@ body {
   font-size: small;
 }
 
+.dropdown-menu, .dropdown-item {
+  border-radius: 20px;
+}
+
 .section-content {  
   background: #fbfbfd;
   height: 44px;

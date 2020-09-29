@@ -4,6 +4,7 @@ const FacebookStrategy = require('passport-facebook').Strategy
 const bcrypt = require('bcryptjs')
 const db = require('../models')
 const { User, Cart, CartItem, Product } = db
+const cartController = require('../controllers/cartController')
 
 passport.use(new LocalStrategy(
   {
@@ -19,10 +20,6 @@ passport.use(new LocalStrategy(
       if (!bcrypt.compareSync(password, user.password)) return done(null, false, req.flash('error_msg', 'Email 或密碼填寫錯誤。'))
       return done(null, user)
     })
-    // .then(() => {
-    //   cartController.postCart
-    //   console.log(11111111)
-    // })
   }
 ))
 
@@ -56,10 +53,10 @@ passport.serializeUser((user, done) => {
 })
 
 passport.deserializeUser((req, id, done) => {
-  // update cartItem UserId then User model can access
+  // let User model can access CartItem
   CartItem.update({ UserId: id },
-    {   // use 0 when visitor won't get a cart
-      where: { cartId: req.session.cartId || 0 }
+    {   // use null when visitor won't get a cart
+      where: { cartId: req.session.cartId || null }
     }
   ).then(() => {
     CartItem.findOne({
