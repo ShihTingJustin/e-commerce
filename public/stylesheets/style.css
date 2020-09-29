@@ -17,6 +17,55 @@ body {
   color:#f5f5f7;
 }
 
+.navbar-nav li {
+  display: inline-block;
+}
+
+@media (max-width: 768px){
+  .navbar-nav {
+    max-width: 768px;
+    width: 100%;
+  }
+
+  .navbar-nav a li svg {
+    width: 100%; 
+    height: auto;
+  }
+
+  .navbar-nav a li, .navCartForMobile-wrapper a {
+    display: inline-block;
+    max-width: 760px;
+    width: 100%;
+    padding: 5px 180px;
+    margin-top: 10px;
+    margin-left: 0;
+    margin-right: 0;
+    border-radius: 20px;
+  }
+
+  .navbar-nav a li:hover, .navCartForMobile-wrapper a:hover {
+    box-shadow: 0 2px 10px #A2A2A2;
+  }
+
+  .navCartForMobile-wrapper a {
+    color: white;
+  }
+
+  .navCartForMobile-wrapper a:hover {
+    background-color: rgb(58, 58, 58); 
+  }
+
+  .nav-dropdown {
+    visibility: hidden;
+  }
+}
+
+@media (min-width: 768px){
+  .navCartForMobile-wrapper {
+    display: none;
+  }
+}
+
 .nav-icon {
   margin: -16px 0;
   padding: 0 25px;
