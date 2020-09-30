@@ -9,7 +9,7 @@
             <div class="btn back-btn px-5 py-3">回上一頁</div>
         </a>
         {{#ifCond req.user.role test}}
-        <form action="/testPay" method="POST">
+        <form action="/test_pay" method="POST">
             <button type="submit" class="btn payment-btn ml-3 px-5 py-3">TEST PAY</button>
             <input type="hidden" name="sn" value="{{tradeInfo.MerchantOrderNo}}"><br>
         </form>
