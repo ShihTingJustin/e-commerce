@@ -14,32 +14,33 @@ const authenticated = (req, res, next) => {
 }
 
 router.get('/products', productController.getProducts)
-// router.get('/productsR', productController.getProductsR)
+// redis router.get('/productsR', productController.getProductsR)
 router.get('/cart', authenticated, cartController.getCart)
 router.post('/cart', cartController.postCart)
-router.post('/cartItem/:id/add', authenticated, cartController.addCartItem)
-router.post('/cartItem/:id/sub', authenticated, cartController.subCartItem)
-router.delete('/cartItem/:id', authenticated, cartController.deleteCartItem)
-// order
-router.get('/orders', authenticated, orderController.getOrders)
-router.post('/order', authenticated, orderController.postOrder)
-router.post('/order/:id/cancel', authenticated, orderController.cancelOrder)
-router.get('/order/:id/payment', authenticated, orderController.getPayment)
-router.post('/newebpay/callback', authenticated, orderController.newebpayCallback)
-router.post('/testpay', authenticated, testController.testPay)
-router.get('/testGetOrder', authenticated, testController.testGetOrder)
-router.get('/testGetSN', authenticated, testController.testGetSN)
+router.patch('/cart_item/:id', authenticated, cartController.patchCartItem)
+router.delete('/cart_item/:id', authenticated, cartController.deleteCartItem)
 
-router.get('/register', userController.registerPage)
-router.post('/register', userController.register)
+// order and payment
+router.get('/orders', authenticated, orderController.getOrders)
+router.post('/orders', authenticated, orderController.postOrder)
+router.post('/orders/:id/cancel', authenticated, orderController.cancelOrder)
+router.get('/orders/:id/payment', authenticated, orderController.getPayment)
+router.post('/newebpay/callback', authenticated, orderController.newebpayCallback)
+
+// load testing
+router.get('/test_get_order', authenticated, testController.testGetOrder)
+router.get('/test_get_SN', authenticated, testController.testGetSN)
+router.post('/test_pay', authenticated, testController.testPay)
+
+// login
+router.get('/users', userController.registerPage)
+router.post('/users', userController.register)
 router.get('/login', userController.loginPage)
 router.post('/login', passport.authenticate('local', {
   failureRedirect: '/login',
   failureFlash: true
 }), userController.login)
-
 router.get('/logout', userController.logout)
-
 router.get('/auth/facebook', passport.authenticate('facebook', {
   scope: ['email', 'public_profile']
 }))

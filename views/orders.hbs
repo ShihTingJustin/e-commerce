@@ -52,11 +52,11 @@
     </ul>
 
     <div style="display: flex; justify-content: space-around;min-width: 300px;">
-      <form action="/order/{{this.id}}/cancel" method="POST">
+      <form action="/orders/{{this.id}}/cancel" method="POST">
         <button type="submit" class="btn order-cancel-btn px-5 py-3 {{#ifCond this.payment_status '-1'}}d-none{{/ifCond}}">取消訂單</button>
       </form>
       {{#ifCond this.payment_status '0'}}
-      <a href="/order/{{this.id}}/payment">
+      <a href="/orders/{{this.id}}/payment">
         <button class="btn payment-btn px-5 py-3">繼續前往付款</button>
       </a>
       {{/ifCond}}
