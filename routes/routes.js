@@ -33,8 +33,8 @@ router.get('/test_get_SN', authenticated, testController.testGetSN)
 router.post('/test_pay', authenticated, testController.testPay)
 
 // login
-router.get('/register', userController.registerPage)
-router.post('/register', userController.register)
+router.get('/users', userController.registerPage)
+router.post('/users', userController.register)
 router.get('/login', userController.loginPage)
 router.post('/login', passport.authenticate('local', {
   failureRedirect: '/login',
