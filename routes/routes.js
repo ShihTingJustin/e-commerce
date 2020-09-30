@@ -17,9 +17,8 @@ router.get('/products', productController.getProducts)
 // redis router.get('/productsR', productController.getProductsR)
 router.get('/cart', authenticated, cartController.getCart)
 router.post('/cart', cartController.postCart)
-router.post('/cartItem/:id/add', authenticated, cartController.addCartItem)
-router.post('/cartItem/:id/sub', authenticated, cartController.subCartItem)
-router.delete('/cartItem/:id', authenticated, cartController.deleteCartItem)
+router.patch('/cart_item/:id', authenticated, cartController.patchCartItem)
+router.delete('/cart_item/:id', authenticated, cartController.deleteCartItem)
 
 // order and payment
 router.get('/orders', authenticated, orderController.getOrders)

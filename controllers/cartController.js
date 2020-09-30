@@ -51,42 +51,24 @@ const cartController = {
         console.log(err)
       }
     })()
-    // Cart.findOrCreate({   // cart exist or not
-    //   where: {
-    //     id: req.session.cartId || 0
-    //   }
-    // }).spread((cart, created) => {   // without product in cart so create
-    //   return CartItem.findOrCreate({
-    //     where: {
-    //       CartId: cart.id,
-    //       ProductId: req.body.productId
-    //     },
-    //     default: {
-    //       CartId: cart.id,
-    //       ProductId: req.body.productId
-    //     }
-    //   }).spread((cartItem, created) => {    // with product in cart so adjust quantity of product
-    //     return cartItem.update({
-    //       quantity: (cartItem.quantity || 0) + 1
-    //     }).then(cartItem => {
-    //       req.session.cartId = cart.id
-    //       return cartItem.save()
-    //     }).then(cartItem => {
-    //       if (req.user) {
-    //         req.session.cartId = req.user.id
-    //         return req.session.save()
-    //       }
-    //     }).then(() => res.redirect('back'))
-    //   })
-    // })
+
   },
 
-  addCartItem: (req, res) => {
+  patchCartItem: (req, res) => {
+    const input = Object.keys(req.body)[0]
+
     CartItem.findByPk(req.params.id)
       .then(cartItem => {
-        cartItem.update({
-          quantity: cartItem.quantity + 1
-        })
+        if (input === 'add')
+          cartItem.update({
+            quantity: cartItem.quantity + 1
+          })
+
+        if (input === 'sub') {
+          cartItem.update({
+            quantity: (cartItem.quantity > 1) ? cartItem.quantity - 1 : 1
+          })
+        }
       })
       .then(() => {
         return res.redirect('back')
