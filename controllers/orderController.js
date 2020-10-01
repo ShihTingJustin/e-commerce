@@ -6,7 +6,6 @@ const mailService = require('../services/mail')
 
 const orderController = {
   getOrders: (req, res) => {
-    console.log(req.user)
     Order.findAll({
       where: { UserId: req.user.id },
       include: [{
@@ -73,9 +72,6 @@ const orderController = {
   },
 
   getPayment: (req, res) => {
-    // console.log('===== getPayment =====')
-    // console.log(req.params.id)
-    // console.log('==========')
     return Order.findByPk(req.params.id)
       .then(order => {
         const tradeInfo = payService.getTradeInfo(req.user.id, order.amount, '商品名稱', process.env.GMAIL_ACCOUNT)
@@ -90,21 +86,7 @@ const orderController = {
   },
 
   newebpayCallback: (req, res) => {
-    console.log('===== newebpayCallback =====')
-    console.log(req.method)
-    console.log(req.query)
-    console.log(req.body)
-    console.log('==========')
-
-    console.log('===== newebpayCallback: TradeInfo =====')
-    console.log(req.body.TradeInfo)
-
-
     const data = JSON.parse(payService.create_mpg_aes_decrypt(req.body.TradeInfo))
-
-    console.log('===== newebpayCallback: create_mpg_aes_decrypt、data =====')
-    console.log(data)
-
     return Order.findAll({ where: { sn: data['Result']['MerchantOrderNo'] } }).then(orders => {
       orders[0].update({
         ...req.body,
@@ -121,7 +103,6 @@ const orderController = {
         }
         return mailService.sendMail(mailOptions, (err, info) => {
           if (err) console.log(err)
-          else console.log('Email sent: ' + info.response)
         })
       })
     })

@@ -25,7 +25,7 @@ const cartController = {
       try {
         // find cart or create cart
         const cart = await Cart.findOrCreate({
-          where: { id: req.session.cartId || 0 }
+          where: { id: req.session.cartId || null }
         })
         // put product into cart
         const CartId = cart[0].id
