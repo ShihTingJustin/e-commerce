@@ -1,9 +1,6 @@
 const crypto = require("crypto")
 const moment = require('moment')
 
-//console.log(sn)
-//console.log(Date.now())
-
 const URL = process.env.URL
 const MerchantID = process.env.MERCHANT_ID
 const HashKey = process.env.HASH_KEY
@@ -35,14 +32,7 @@ module.exports = {
       return sha.update(plaintext).digest('hex').toUpperCase()
     }
 
-    // console.log('===== getTradeInfo =====')
-    // console.log(Amt, Desc, email)
-    // console.log('==========')
-
-    // FOR LOAD TESTING
-    //const sn = userId 
-
-    //FOR PRODUCTION 
+    // an unique sn made of date(YYYYMMDD) + time(HHMMSS) + userid
     const date = new Date()
     const sn = moment(date).format('YYYYMMDDHHMMSS') + userId
 
@@ -62,15 +52,8 @@ module.exports = {
       'ClientBackURL': ClientBackURL // 支付取消返回商店網址
     }
 
-    // console.log('===== getTradeInfo: data =====')
-    // console.log(data)
-
     mpg_aes_encrypt = create_mpg_aes_encrypt(data)
     mpg_sha_encrypt = create_mpg_sha_encrypt(mpg_aes_encrypt)
-
-    // console.log('===== getTradeInfo: mpg_aes_encrypt, mpg_sha_encrypt =====')
-    // console.log(mpg_aes_encrypt)
-    // console.log(mpg_sha_encrypt)
 
     tradeInfo = {
       'MerchantID': MerchantID, // 商店代號
@@ -80,10 +63,6 @@ module.exports = {
       'PayGateWay': PayGateWay,
       'MerchantOrderNo': data.MerchantOrderNo
     }
-
-    // console.log('===== getTradeInfo: tradeInfo =====')
-    // console.log(tradeInfo)
-
     return tradeInfo
   },
 

@@ -73,14 +73,14 @@ passport.deserializeUser((req, id, done) => {
         }).then(user => {
           user = user.toJSON()
           return done(null, user)
-        })
+        }).catch(err => console.log(err))
       } else {
         // if not, just get user data
         User.findByPk(id)
           .then(user => {
             user = user.toJSON()
             return done(null, user)
-          })
+          }).catch(err => console.log(err))
       }
     })
   })
