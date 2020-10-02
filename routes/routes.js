@@ -13,6 +13,12 @@ const authenticated = (req, res, next) => {
   res.redirect('/login')
 }
 
+const authenticatedTester = (req, res, next) => {
+  if (req.user.role === 'test') return next()
+  req.session.redirectTo = req.originalUrl
+  res.redirect('/login')
+}
+
 router.get('/products', productController.getProducts)
 // redis router.get('/productsR', productController.getProductsR)
 router.get('/cart', authenticated, cartController.getCart)
@@ -28,9 +34,10 @@ router.get('/orders/:id/payment', authenticated, orderController.getPayment)
 router.post('/newebpay/callback', authenticated, orderController.newebpayCallback)
 
 // load testing
-router.get('/test_get_order', authenticated, testController.testGetOrder)
-router.get('/test_get_SN', authenticated, testController.testGetSN)
-router.post('/test_pay', authenticated, testController.testPay)
+router.get('/test_get_order', authenticatedTester, testController.testGetOrder)
+router.get('/test_get_SN', authenticatedTester, testController.testGetSN)
+router.post('/test_pay', authenticatedTester, testController.testPay)
+router.get('/test_report', authenticatedTester, testController.getReport)
 
 // login
 router.get('/users', userController.registerPage)

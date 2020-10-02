@@ -36,7 +36,7 @@ const testController = {
         where: { sn: req.body.sn },
         include: [{ model: Product, as: 'items' }]
       })
-      
+
       // OrderItem ProductID    
       let idData = order.toJSON().items.map(item => item.id)
 
@@ -84,6 +84,32 @@ const testController = {
       console.log(err)
       await t1.rollback()
     }
+  },
+
+  getReport: (req, res) => {
+    Product.findByPk(2).then(product => {
+      Order.findAndCountAll({
+        raw: true,
+        nest: true
+      }).then(orders => {
+        if (orders.count < 0) return
+        let snCount = 0
+        let paymentCount = 0
+        orders.rows.forEach(order => {
+          if (order.sn !== null) snCount++
+          if (order.payment_status === '1') paymentCount++
+        })
+        const stock = (product.toJSON().stock === 0) ? true : false
+        snCount = (snCount === 20) ? true : false
+        paymentCount = (paymentCount === 20) ? true : false
+        return res.render('report', {
+          stock,
+          snCount,
+          paymentCount
+        })
+      })
+    })
+
   }
 
 }
