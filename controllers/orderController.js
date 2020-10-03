@@ -74,7 +74,7 @@ const orderController = {
   getPayment: (req, res) => {
     return Order.findByPk(req.params.id)
       .then(order => {
-        const tradeInfo = payService.getTradeInfo(req.user.id, order.amount, '商品名稱', process.env.GMAIL_ACCOUNT)
+        const tradeInfo = payService.getTradeInfo(req.user.id, order.amount, '商品名稱', req.user.email)
         order.update({
           ...req.body,
           sn: tradeInfo.MerchantOrderNo
