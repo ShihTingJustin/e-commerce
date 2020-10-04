@@ -2,6 +2,7 @@
 具備基本購物功能的電商網站，主要特色是實作商品秒殺場景所需之後端架構。
 
 [**DEMO HERE**](https://justinhuang.app/)
+[**Medium HERE**](https://medium.com/@mercedes722s/%E9%9B%BB%E5%95%86%E5%B0%88%E6%A1%88-%E5%95%86%E5%93%81%E7%A7%92%E6%AE%BA%E5%A0%B4%E6%99%AF%E5%AF%A6%E4%BD%9C-3f43c996b80a)
 
 ![](https://i.imgur.com/gvDVby7.png)
 
@@ -25,20 +26,25 @@
 - [x] 新增 SSL 加密憑證
 
 ### 商品秒殺場景 (Load Testing)
-- [x] 使用 JMeter 模擬大量用戶在相同時間購買相同商品
-- [x] 使用 Redis 作為商品資料快取
-- [x] 使用 MySQL transaction, conection pool
-- [x] 使用 influxdb + Grafana 實作資料視覺化
+- [x] JMeter 模擬大量使用者在相同時間購買相同商品
+- [x] NGINX 作為負載平衡架構
+- [x] redis 作為商品資料快取
+- [x] MySQL transaction, conection pool 優化資料庫正確性與效能
+- [x] influxdb + Grafana 實作測試儀表板，使資料視覺化
 
-![](https://i.imgur.com/UWgkHc7.jpg)
+### 架構圖
+![](https://i.imgur.com/TM9LBeZ.jpg)
+
+
+### 負載測試儀表板
 ![](https://i.imgur.com/k9UdftM.jpg)
 
 
-
 ### 未來精進項目
+- [ ] Message Queue - RabbitMQ / Kafka
 - [ ] 增加 redis 存放的資料類型
 - [ ] express 讀寫分離
-- [ ] 增加 server & nginx 負載平衡
+- [ ] 增加 server 數量 & NGINX 實作負載平衡
 - [ ] JMeter Distributed Testing
 
 
@@ -52,36 +58,44 @@
 
 ## 環境
 ### Web App
-node.js: v12.18.4
-MySQL: 8
-redis: 6.0.7
+* AWS EC2: t3.large
+* Ubuntu: 18.04.5 LTS
+* nginx: 1.14.0
+* node.js: 12.18.4
+* redis: 6.0.7
 
-### AWS EC2
-Ubuntu 18.04.5 LTS
-nginx: 1.14.0
+### Database
+* AWS RDS
+* MySQL: 8
+
+
+### 測試
+* JMeter: 5.3
+* influxdb: 1.8.3
+* Grafana: 7.2
 
 ## 套件
-async-redis: 1.1.7
-bcryptjs: 2.4.3
-body-parser: 1.19.0
-connect-flash: 0.1.1
-crypto: 1.0.1
-dotenv: 8.2.0
-express": 4.17.1
-express-handlebars: 5.1.0
-express-session: 1.17.1
-faker: 5.1.0
-method-override: 3.0.0
-moment: 2.29.0
-mysql2: 2.1.0
-nodemailer: 6.4.11
-passport: 0.4.1
-passport-facebook: 3.0.0
-passport-local: 1.0.0
-pm2: 4.4.1
-redis: 3.0.2
-sequelize: 5.8.6
-sequelize-cli: 5.4.0
+* async-redis: 1.1.7
+* bcryptjs: 2.4.3
+* body-parser: 1.19.0
+* connect-flash: 0.1.1
+* crypto: 1.0.1
+* dotenv: 8.2.0
+* express": 4.17.1
+* express-handlebars: 5.1.0
+* express-session: 1.17.1
+* faker: 5.1.0
+* method-override: 3.0.0
+* moment: 2.29.0
+* mysql2: 2.1.0
+* nodemailer: 6.4.11
+* passport: 0.4.1
+* passport-facebook: 3.0.0
+* passport-local: 1.0.0
+* pm2: 4.4.1
+* redis: 3.0.2
+* sequelize: 5.8.6
+* sequelize-cli: 5.4.0
 
 ## 開發者
 [Justin Huang 黃士庭](https://www.linkedin.com/in/justinhuang777/) 

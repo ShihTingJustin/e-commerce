@@ -97,7 +97,7 @@ const orderController = {
         // send payment confirmation email
         let mailOptions = {
           from: process.env.GMAIL_ACCOUNT,
-          to: process.env.HOTMAIL_ACCOUNT,
+          to: req.user.email,
           subject: `訂單編號：${data['Result']['MerchantOrderNo']} 付款成功`,
           text: `訂單編號：${data['Result']['MerchantOrderNo']} 付款成功`
         }
