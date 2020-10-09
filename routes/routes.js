@@ -20,6 +20,7 @@ const authenticatedTester = (req, res, next) => {
 }
 
 router.get('/products', productController.getProducts)
+router.get('/products/:id', productController.getProduct)
 router.get('/productsRedis', productController.getProductsRedis)
 router.get('/cart', authenticated, cartController.getCart)
 router.post('/cart', cartController.postCart)
