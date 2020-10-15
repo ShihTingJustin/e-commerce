@@ -10,7 +10,8 @@ const orderController = {
       where: { UserId: req.user.id },
       include: [{
         model: Product, as: "items"
-      }]
+      }],
+      order: [['updatedAt', 'DESC']]
     }).then(orders => {
       orders = orders.map(order => ({
         ...order.dataValues
