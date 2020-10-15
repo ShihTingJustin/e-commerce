@@ -3,8 +3,7 @@ const LocalStrategy = require('passport-local').Strategy
 const FacebookStrategy = require('passport-facebook').Strategy
 const bcrypt = require('bcryptjs')
 const db = require('../models')
-const { User, Cart, CartItem, Product } = db
-const cartController = require('../controllers/cartController')
+const { User, CartItem, Cart } = db
 
 passport.use(new LocalStrategy(
   {
@@ -18,8 +17,45 @@ passport.use(new LocalStrategy(
     }).then(user => {
       if (!user) return done(null, false, req.flash('error_msg', '此 Email 尚未註冊。'))
       if (!bcrypt.compareSync(password, user.password)) return done(null, false, req.flash('error_msg', 'Email 或密碼填寫錯誤。'))
+      return user
+    }).then(user => {
+      const sessionCartId = req.session.cartId
+      if (sessionCartId) {
+        // Is cart have UserId ?
+        Cart.findOne({
+          where: { UserId: user.dataValues.id }
+        }).then(cart => {
+          // Yes then update cartItem
+          if (cart) {
+            CartItem.findAll({
+              where: { CartId: sessionCartId }
+            }).then(cartItems => {
+              cartItems.forEach(cartItem => { cartItem.update({ CartId: cart.id }) })
+            })
+          } else {
+            // No, so update cart UserId and cartItem
+            Cart.findByPk(sessionCartId).then(cart => {
+              // update cart UserId
+              cart.update({ UserId: user.dataValues.id })
+              // update new cartId if necessary
+              CartItem.findAll({
+                where: { CartId: sessionCartId }
+              }).then(cartItems => {
+                cartItems.forEach(cartItem => { cartItem.update({ CartId: cart.id }) })
+              })
+            })
+          }
+        })
+      } else {
+        Cart.findOrCreate({
+          where: { UserId: user.dataValues.id },
+          default: { UserId: user.dataValues.id }
+        })
+      }
+      return user
+    }).then(user => {
       return done(null, user)
-    })
+    }).then(err => console.log(err))
   }
 ))
 
@@ -41,8 +77,42 @@ passport.use(new FacebookStrategy(
           email,
           password: bcrypt.hashSync(randomPassword, bcrypt.genSaltSync(10), null),
           role: 'user'
-        })
-          .then(user => done(null, user, req.flash('success_msg', '登入成功。')))
+        }).then(user => {
+          const sessionCartId = req.session.cartId
+          if (sessionCartId) {
+            // Is cart have UserId ?
+            Cart.findOne({
+              where: { UserId: user.dataValues.id }
+            }).then(cart => {
+              // Yes then update cartItem
+              if (cart) {
+                CartItem.findAll({
+                  where: { CartId: sessionCartId }
+                }).then(cartItems => {
+                  cartItems.forEach(cartItem => { cartItem.update({ CartId: cart.id }) })
+                })
+              } else {
+                // No, so update cart UserId and cartItem
+                Cart.findByPk(sessionCartId).then(cart => {
+                  // update cart UserId
+                  cart.update({ UserId: user.dataValues.id })
+                  // update new cartId if necessary
+                  CartItem.findAll({
+                    where: { CartId: sessionCartId }
+                  }).then(cartItems => {
+                    cartItems.forEach(cartItem => { cartItem.update({ CartId: cart.id }) })
+                  })
+                })
+              }
+            })
+          } else {
+            Cart.findOrCreate({
+              where: { UserId: user.dataValues.id },
+              default: { UserId: user.dataValues.id }
+            })
+          }
+          return user
+        }).then(user => done(null, user, req.flash('success_msg', '登入成功。')))
           .catch(err => done(err, false))
       })
   }
@@ -53,38 +123,11 @@ passport.serializeUser((user, done) => {
 })
 
 passport.deserializeUser((req, id, done) => {
-  // let User model can access CartItem
-  CartItem.update({ UserId: id },
-    {   // use null when visitor won't get a cart
-      where: { cartId: req.session.cartId || null }
-    }
-  ).then(() => {
-    CartItem.findOne({
-      where: { UserId: id }
-    }).then(cartItem => {
-      // if cartItem exist, get them with user data
-      if (cartItem) {
-        User.findByPk(id, {
-          include: [{
-            model: CartItem,
-            where: { UserId: id },
-            include: [Product]
-          }]
-        }).then(user => {
-          user = user.toJSON()
-          return done(null, user)
-        }).catch(err => console.log(err))
-      } else {
-        // if not, just get user data
-        User.findByPk(id)
-          .then(user => {
-            user = user.toJSON()
-            return done(null, user)
-          }).catch(err => console.log(err))
-      }
+  User.findByPk(id)
+    .then(user => {
+      user = user.toJSON()
+      return done(null, user)
     })
-  })
-
 })
 
 module.exports = passport

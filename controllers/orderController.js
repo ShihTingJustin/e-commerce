@@ -1,6 +1,6 @@
 require('dotenv').config()
 const db = require('../models')
-const { CartItem, Order, OrderItem, Product } = db
+const { Cart, CartItem, Order, OrderItem, Product } = db
 const payService = require('../services/newebpay')
 const mailService = require('../services/mail')
 
@@ -21,12 +21,10 @@ const orderController = {
 
   postOrder: (req, res) => {
     // create order
-    CartItem.findAll({
-      raw: true,
-      nest: true,
+    Cart.findOne({
       where: { UserId: req.user.id },
-      include: [Product]
-    }).then(cartItems => {
+      include: 'items'
+    }).then(cart => {
       const { name, address, phone, shipping_status, payment_status, amount } = req.body
       return Order.create({
         name,
@@ -38,20 +36,21 @@ const orderController = {
         UserId: req.user.id
       }).then(order => {    // put product in order from cart
         let results = []
+        const cartItems = cart.dataValues.items
         for (let i = 0; i < cartItems.length; i++) {
           results.push(
             OrderItem.create({
               OrderId: order.id,
-              ProductId: cartItems[i].ProductId,
-              price: cartItems[i].Product.price,
-              quantity: cartItems[i].quantity
+              ProductId: cartItems[i].dataValues.id,
+              price: cartItems[i].dataValues.price,
+              quantity: cartItems[i].dataValues.CartItem.dataValues.quantity
             })
           )
         }
-        // clear cart after order finish
+        // clear cart after post order 
         Promise.all(results).then(() => {
           return CartItem.destroy({
-            where: { UserId: req.user.id }
+            where: { CartId: cart.id }
           })
         }).then(() => { return res.redirect('/orders') })
       })
