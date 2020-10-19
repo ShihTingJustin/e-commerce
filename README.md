@@ -1,13 +1,20 @@
 # E-Commerce 
 具備基本購物功能的電商網站，主要特色是實作商品秒殺場景所需之後端架構。
 
-[**DEMO HERE**](https://justinhuang.app/)
-[**Medium HERE**](https://medium.com/@mercedes722s/%E9%9B%BB%E5%95%86%E5%B0%88%E6%A1%88-%E5%95%86%E5%93%81%E7%A7%92%E6%AE%BA%E5%A0%B4%E6%99%AF%E5%AF%A6%E4%BD%9C-3f43c996b80a)
+#### 👉 [DEMO](https://justinhuang.app/)
+
+#### 👉 [Medium 專案介紹](https://medium.com/@mercedes722s/電商專案-商品秒殺場景實作-3f43c996b80a)
+
+###  測試帳號
+| role |      account      | password |
+|:----:|:-----------------:|:--------:|
+| user | user0@example.com |   123    |
+| user | user1@example.com |   123    |
+| user | user2@example.com |   123    |
 
 ![](https://i.imgur.com/gvDVby7.png)
 
 ## 使用者故事及規格
-
 ### 已完成
 2020/9/16
 - [x] 使用者可以建立帳號並登入
@@ -20,57 +27,46 @@
 - [x] 登入的使用者可以使用信用卡一次付清
 
 2020/10/3
-- [x] 登入的使用者可以在導覽列購物袋看見已放入購物袋的商品
 - [x] 使用者可以使用 Facebook 建立帳號並登入
 - [x] 登入的使用者付款完成後，會收到訂單付款完成通知信
 - [x] 新增 SSL 加密憑證
 
 ### 商品秒殺場景 (Load Testing)
 - [x] JMeter 模擬大量使用者在相同時間購買相同商品
-- [x] NGINX 作為負載平衡架構
+- [x] NGINX 調校讓伺服器承受更高的請求數量
 - [x] redis 作為商品資料快取
-- [x] MySQL transaction, conection pool 優化資料庫正確性與效能
-- [x] influxdb + Grafana 實作測試儀表板，使資料視覺化
+- [x] MySQL 優化資料庫正確性與效能
+
 
 ### 架構圖
-![](https://i.imgur.com/TM9LBeZ.jpg)
+![](https://i.imgur.com/hOpijmt.jpg)
 
-
-### 負載測試儀表板
-![](https://i.imgur.com/k9UdftM.jpg)
+### ERD
+![](https://i.imgur.com/NZBdRKd.png)
 
 
 ### 未來精進項目
-- [ ] Message Queue - RabbitMQ / Kafka
-- [ ] 增加 redis 存放的資料類型
+- [ ] 訊息佇列 RabbitMQ / Kafka
+- [ ] 增加 server 數量 & NGINX 負載平衡
+- [ ] Linux 在高併發下有可能受限於 kernel, TCP 參數
+- [ ] 將更多資料庫操作放到 redis
 - [ ] express 讀寫分離
-- [ ] 增加 server 數量 & NGINX 實作負載平衡
-- [ ] JMeter Distributed Testing
-
-
-## 測試帳號
-| role |      account      | password |
-|:----:|:-----------------:|:--------:|
-| user | user0@example.com |   123    |
-| user | user1@example.com |   123    |
-| user | user2@example.com |   123    |
-
+- [ ] 嘗試使用 NoSQL
 
 ## 環境
-### Web App
-* AWS EC2: t3.large
+### Web App (AWS EC2: t2.micro)
 * Ubuntu: 18.04.5 LTS
 * nginx: 1.14.0
 * node.js: 12.18.4
-* redis: 6.0.7
 
-### Database
-* AWS RDS
+### Database (AWS RDS: t2.micro)
 * MySQL: 8
-
+* redis: 6.0.7
 
 ### 測試
 * JMeter: 5.3
+
+### 儀表板
 * influxdb: 1.8.3
 * Grafana: 7.2
 
