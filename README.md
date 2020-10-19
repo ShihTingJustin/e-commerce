@@ -66,10 +66,6 @@
 ### 測試
 * JMeter: 5.3
 
-### 儀表板
-* influxdb: 1.8.3
-* Grafana: 7.2
-
 ## 套件
 * async-redis: 1.1.7
 * bcryptjs: 2.4.3
