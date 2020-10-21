@@ -88,23 +88,26 @@ const orderController = {
   newebpayCallback: (req, res) => {
     const data = JSON.parse(payService.create_mpg_aes_decrypt(req.body.TradeInfo))
     return Order.findAll({ where: { sn: data['Result']['MerchantOrderNo'] } }).then(orders => {
-      orders[0].update({
-        ...req.body,
-        payment_status: 1,
-      }).then(() => {
-        return res.redirect('/orders')
-      }).then(() => {
-        // send payment confirmation email
-        let mailOptions = {
-          from: process.env.GMAIL_ACCOUNT,
-          to: req.user.email,
-          subject: `訂單編號：${data['Result']['MerchantOrderNo']} 付款成功`,
-          text: `訂單編號：${data['Result']['MerchantOrderNo']} 付款成功`
-        }
-        return mailService.sendMail(mailOptions, (err, info) => {
-          if (err) console.log(err)
+      if (req.query.from === 'NotifyURL') { return res.status(200) }
+      if (req.query.from === 'ReturnURL') {
+        orders[0].update({
+          ...req.body,
+          payment_status: 1,
+        }).then(() => {
+          return res.redirect('/orders')
+        }).then(() => {
+          // send payment confirmation email
+          let mailOptions = {
+            from: process.env.GMAIL_ACCOUNT,
+            to: req.user.email,
+            subject: `訂單編號：${data['Result']['MerchantOrderNo']} 付款成功`,
+            text: `訂單編號：${data['Result']['MerchantOrderNo']} 付款成功`
+          }
+          return mailService.sendMail(mailOptions, (err, info) => {
+            if (err) console.log(err)
+          })
         })
-      })
+      }
     })
   }
 

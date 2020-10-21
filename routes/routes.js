@@ -33,6 +33,7 @@ router.post('/orders', authenticated, orderController.postOrder)
 router.post('/orders/:id/cancel', authenticated, orderController.cancelOrder)
 router.get('/orders/:id/payment', authenticated, orderController.getPayment)
 router.post('/newebpay/callback', authenticated, orderController.newebpayCallback)
+router.get('/paymentComplete', (req, res) => res.render('paymentComplete'))
 
 // load testing
 router.get('/test_get_order', authenticatedTester, testController.testGetOrder)
