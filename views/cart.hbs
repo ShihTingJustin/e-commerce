@@ -1,4 +1,4 @@
-{{#if cartItems}}
+{{#if cart.items}}
 <h1 class="text-center mt-4">{{#if totalPrice}}以下是您購物袋內的商品 NT${{totalPrice}}{{/if}}</h1>
 <div class="mx-auto my-5" style="width: 90%;">
   <table class="table text-center">
@@ -12,35 +12,35 @@
       </tr>
     </thead>
     <tbody>
-      {{#each cartItems}}
+      {{#each cart.items}}
       <tr>
         <td>
           <div>
-            <img src="{{this.Product.image}}" class="card-img" alt="..." style="height: 100px;width: auto;">
-            <span class="ml-3">{{this.Product.name}}</span>
+            <img src="{{this.image}}" class="card-img" alt="..." style="height: 100px;width: auto;">
+            <span class="ml-3">{{this.name}}</span>
           </div>
         </td>
         <td>
-          <div>$ {{this.Product.price}}</div>
+          <div>$ {{this.price}}</div>
         </td>
         <td class="">
           <div class="d-flex justify-content-center align-items-center">
-            <form action="/cart_item/{{this.id}}?_method=PATCH" method="POST">
+            <form action="/cart_item/{{this.CartItem.id}}?_method=PATCH" method="POST">
               <button type="submit" class="fas fa-minus-circle border-0 bg-transparent"></button>
               <input class="d-none" type="text" name="sub">
             </form>
             <span style="margin: 0 20px;">
-              {{this.quantity}}
+              {{this.CartItem.quantity}}
             </span>
-            <form action="/cart_item/{{this.id}}?_method=PATCH" method="POST">
+            <form action="/cart_item/{{this.CartItem.id}}?_method=PATCH" method="POST">
               <button type="submit" class="fas fa-plus-circle border-0 bg-transparent"></button>
               <input class="d-none" type="text" name="add">
             </form>
           </div>
         </td>
-        <td>{{this.Product.price}} * {{this.quantity}}</td>
+        <td>{{this.price}} * {{this.CartItem.quantity}}</td>
         <td>
-          <form action="/cart_item/{{this.id}}?_method=DELETE" method="POST">
+          <form action="/cart_item/{{this.CartItem.id}}?_method=DELETE" method="POST">
             <button type="submit" class="btn btn-link">
               <i class="fas fa-trash"></i>
             </button>

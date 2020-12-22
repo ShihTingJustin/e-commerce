@@ -91,8 +91,17 @@ const productController = {
     }
 
     getProductsRedisAsync()
-  }
+  },
 
+  getProduct: (req, res) => {
+    (async () => {
+      const key = await client.keys(`${req.params.id}`)
+      const redisProduct = await client.get(key)
+      product = JSON.parse(redisProduct)
+      return res.render('product', { product })
+    })()
+  }
+  
 }
 
 module.exports = productController

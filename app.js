@@ -13,7 +13,7 @@ if (process.env.NODE_ENV !== 'production') {
 }
 const passport = require('./config/passport')
 const redis = require('./config/redis')
-
+require('./redis/productCache')
 
 app.engine('hbs', exphbs({ extname: '.hbs', helpers: require('./config/handlebars-helpers') }))
 app.set('view engine', 'hbs')

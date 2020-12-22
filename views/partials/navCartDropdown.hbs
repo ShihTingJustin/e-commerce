@@ -23,35 +23,6 @@
       </svg>
     </button>
     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink" style="width: 280px;">
-      {{#if user}}
-      <div class="list-group-item border-0">
-        {{#if user.CartItems}}
-        {{#each user.CartItems}}
-        <div class="row mx-auto">
-          <div class="col-4 d-flex align-items-center">
-            <img src="{{this.Product.image}}" class="card-img" alt="">
-          </div>
-          <div class="col-8 d-flex align-items-center">
-            <div class="card-body">
-              <h5 class="card-title" style="font-size: 14px;">{{this.Product.name}}</h5>
-            </div>
-          </div>
-        </div>
-        {{/each}}
-        <a class="dropdown-item mt-3" href="/cart">
-          <button class="btn nav-post-order-btn w-100">結帳</button>
-        </a>
-        {{else}}
-        <small class="d-flex justify-content-center">購物袋中沒有任何商品。</small>
-        {{/if}}
-      </div>
-      <div class="dropdown-divider"></div>
-      {{/if}}
-
-
-
-      
-
       <a class="dropdown-item d-flex justify-content-center align-items-center" href="/cart">
         <img src="https://i.imgur.com/ZlFAWRi.png" alt="">
         <div class="nav-cart-item">購物袋</div>
